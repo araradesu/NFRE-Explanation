@@ -67,10 +67,12 @@ export function createExplanationView() {
           <p>矢印の方向に合わせ、ノートを斜めからのぞき込む。すると、細長かった文字がつながり、<strong>「スタート」</strong>と読めることが分かる。</p>
           <div class="explanation-answer"><span>最初のパスワード</span><strong>スタート</strong></div>
           <p>これで、問題1を開放することができた。</p>
-          <aside class="explanation-trivia">
-            <span>裏話</span>
-            <p>このように、見る角度を変えることで正しい形が現れるデザイン技法を、<strong>「アナモルフォーシス」</strong>という。</p>
-          </aside>
+          <details class="explanation-trivia">
+            <summary>ウラ話</summary>
+            <div class="explanation-trivia-body">
+              <p>このように、見る角度を変えることで正しい形が現れるデザイン技法を、<strong>「アナモルフォーシス」</strong>という。</p>
+            </div>
+          </details>
         </div>
       </details>
 
@@ -118,10 +120,12 @@ export function createExplanationView() {
           <p>【　】の形が小さい順にブラックライトを照らすと、1文字ずつ漢字が浮かび上がった。</p>
           <div class="explanation-answer"><span>浮かび上がった言葉</span><strong>大成功</strong></div>
           <p>これで、問題3を開放することができた。</p>
-          <aside class="explanation-trivia">
-            <span>裏話</span>
-            <p>ノートには、文章の内容、文字、線、ページの順番など、複数種類の異変を仕込んでいた。異変集は写真の準備ができ次第、このページへ追加する。</p>
-          </aside>
+          <details class="explanation-trivia">
+            <summary>ウラ話</summary>
+            <div class="explanation-trivia-body">
+              <p>ノートには、文章の内容、文字、線、ページの順番など、複数種類の異変を仕込んでいた。異変集は写真の準備ができ次第、このページへ追加する。</p>
+            </div>
+          </details>
         </div>
       </details>
 
@@ -195,13 +199,7 @@ export function createExplanationView() {
           </div>
           <p>試験スタッフへ尋ねても、このエラーを復旧することはできない。</p>
           <p>どうやら試験担当の先生は、送信フォームの構造をわざと破壊し、<strong>「絶対に合格できない試験」</strong>を作り上げていたらしい。</p>
-          <div class="explanation-condition">
-            <span>合格条件</span>
-            <p>最終問題の正解を、試験担当の先生の元へ提出すること。</p>
-          </div>
-          <p>最終問題の正解は「傑作」。あとは先生へ提出するだけだが、試験用ソフトからは提出できない。</p>
-          <p>ここで、発想の転換が必要だった。</p>
-          <blockquote class="explanation-big-question">「試験用ソフト」から提出できないのであれば、<br><strong>ほかの方法</strong>で先生へ提出できないだろうか？</blockquote>
+          <p>このまま、不合格通知を待つしかないのだろうか。</p>
         </div>
       </details>
 
@@ -212,13 +210,20 @@ export function createExplanationView() {
           <span class="explanation-summary-action" aria-hidden="true"></span>
         </summary>
         <div class="explanation-chapter-body">
+          <p><strong>まず、今の状況を整理してみよう。</strong></p>
+          <div class="explanation-condition">
+            <span>合格条件</span>
+            <p>最終問題の正解を、試験担当の先生の元へ提出すること。</p>
+          </div>
+          <p>最終問題の正解は「傑作」。あとは先生へ提出するだけだが、試験用ソフトからは提出できない。</p>
+          <p>そこで、試験用ソフトを使わずに、先生へ答えを提出する方法を考える必要があった。</p>
           <p>試験が始まる直前、床の落とし物に気づいたスタッフが、そこに書かれた名前の人物へ直接届けに行くハプニングがあった。</p>
-          <p>つまり、最終問題の答えと、先生の名前が書かれた物を<strong>「落とし物」</strong>としてスタッフへ渡せば、スタッフが先生の元まで直接届けてくれるはずだ。</p>
-          <p>ただし、実行するには3つの情報が必要になる。</p>
+          <p>先生の名前が書かれた物を<strong>「落とし物」</strong>としてスタッフへ渡せば、先生の元まで直接届けてもらえるはずだ。</p>
+          <p>この方法で答えを提出するには、次の3つを順番に考える必要がある。</p>
           <ol class="explanation-requirements">
             <li><span>01</span><strong>試験担当の先生の名前</strong></li>
             <li><span>02</span><strong>先生の名前が書かれた物</strong></li>
-            <li><span>03</span><strong>最終問題の答えとして提出できる物</strong></li>
+            <li><span>03</span><strong>「傑作」という言葉を先生へ提出する方法</strong></li>
           </ol>
 
           <section class="explanation-solution-step">
@@ -248,7 +253,8 @@ export function createExplanationView() {
           <section class="explanation-solution-step">
             <span class="explanation-step-number">03</span>
             <div>
-              <h3>「傑作」を提出できる形にする</h3>
+              <h3>「傑作」という言葉を先生へ提出する</h3>
+              <p>鈴木 優希先生の名前が書かれていた物は、何かを中に入れられる<strong>小物入れ</strong>だった。つまり、この中に「傑作」と書かれた物を入れて届けてもらえば、落とし物を返すのと同時に、最終問題の答えも提出できる。</p>
               <p>会場にはペンも消しゴムもなく、紙へ「傑作」と書くことはできない。しかし、机の上にある物をもう一度探すと、問題1で手に入れたピースの中に、偶然にも<strong>「けっさく」</strong>の4文字が書かれた1枚があった。</p>
               <div class="explanation-photo-pair">
                 ${picture('lost-item-box.png', '最終提出に使われた白い小物入れ', '鈴木 優希の小物入れ')}
@@ -263,11 +269,13 @@ export function createExplanationView() {
           </div>
           <p>スタッフがその小物入れを鈴木 優希先生へ届けることで、試験用ソフトを使わずに最終問題の答えを提出できる。こうして、理不尽な追試験に合格することができた。</p>
 
-          <aside class="explanation-trivia explanation-trivia-family">
-            <span>裏話</span>
-            <p><strong>鈴木 千尋</strong>は鈴木 優希の妻、<strong>鈴木 理央</strong>は鈴木 優希の娘である。鈴木先生は、この試験を作るために家族の物を勝手に拝借していたらしい。</p>
-            <p>正解の小物入れを実際に会場の床へ落としても、スタッフが拾って先生へ届けに行き、成功となる。</p>
-          </aside>
+          <details class="explanation-trivia explanation-trivia-family">
+            <summary>ウラ話</summary>
+            <div class="explanation-trivia-body">
+              <p><strong>鈴木 千尋</strong>は鈴木 優希の妻、<strong>鈴木 理央</strong>は鈴木 優希の娘である。鈴木先生は、この試験を作るために家族の物を勝手に拝借していたらしい。</p>
+              <p>正解の小物入れを実際に会場の床へ落としても、スタッフが拾って先生へ届けに行き、成功となる。</p>
+            </div>
+          </details>
         </div>
       </details>
 

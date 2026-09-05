@@ -199,7 +199,7 @@ a {
   scroll-margin-top: 24px;
 }
 
-.explanation-chapter summary {
+.explanation-chapter > summary {
   position: relative;
   display: grid;
   grid-template-columns: 36px 1fr 28px;
@@ -212,15 +212,15 @@ a {
   background: #fff;
 }
 
-.explanation-chapter summary::-webkit-details-marker {
+.explanation-chapter > summary::-webkit-details-marker {
   display: none;
 }
 
-.explanation-chapter summary:hover {
+.explanation-chapter > summary:hover {
   background: #f8f9fa;
 }
 
-.explanation-chapter[open] summary {
+.explanation-chapter[open] > summary {
   border-bottom: 1px solid var(--border);
 }
 
@@ -323,12 +323,11 @@ a {
 .explanation-answer,
 .explanation-condition,
 .explanation-callout,
-.explanation-pending,
-.explanation-trivia {
+.explanation-pending {
   margin: 24px 0;
   padding: 20px 22px;
-  border: 1px solid #cadbe8;
-  border-radius: 6px;
+  border: 0;
+  border-radius: 4px;
   background: var(--accent-light);
 }
 
@@ -342,8 +341,7 @@ a {
 .explanation-answer span,
 .explanation-condition > span,
 .explanation-callout > span,
-.explanation-pending > span,
-.explanation-trivia > span {
+.explanation-pending > span {
   color: #49667d;
   font-size: 0.82rem;
   font-weight: 700;
@@ -361,30 +359,77 @@ a {
 }
 
 .explanation-callout,
-.explanation-pending,
-.explanation-trivia {
-  border-color: #ddd7bd;
+.explanation-pending {
   background: #faf8ed;
 }
 
 .explanation-callout > span,
-.explanation-pending > span,
-.explanation-trivia > span {
+.explanation-pending > span {
   color: #756928;
 }
 
 .explanation-callout p,
 .explanation-pending p,
-.explanation-trivia p,
 .explanation-condition p {
   margin: 6px 0 0;
 }
 
 .explanation-turn {
-  margin-top: 36px !important;
-  color: #454d53;
+  color: inherit;
+  font-weight: 400;
+  text-align: left;
+}
+
+.explanation-trivia {
+  margin: 24px 0;
+  overflow: hidden;
+  border: 0;
+  border-radius: 4px;
+  background: #faf8ed;
+}
+
+.explanation-trivia summary {
+  position: relative;
+  display: block;
+  min-height: 0;
+  padding: 14px 52px 14px 20px;
+  cursor: pointer;
+  list-style: none;
+  background: #f3efd9;
+  color: #675d25;
+  font-size: 0.92rem;
   font-weight: 700;
-  text-align: center;
+}
+
+.explanation-trivia summary::-webkit-details-marker {
+  display: none;
+}
+
+.explanation-trivia summary::after {
+  position: absolute;
+  top: 50%;
+  right: 20px;
+  content: "＋";
+  color: #756928;
+  font-size: 1.1rem;
+  font-weight: 400;
+  transform: translateY(-50%);
+}
+
+.explanation-trivia[open] summary::after {
+  content: "−";
+}
+
+.explanation-trivia-body {
+  padding: 16px 20px 18px;
+}
+
+.explanation-trivia-body p {
+  margin: 0 0 10px;
+}
+
+.explanation-trivia-body p:last-child {
+  margin-bottom: 0;
 }
 
 .explanation-clue-grid {
@@ -497,15 +542,6 @@ a {
   line-height: 1.6;
 }
 
-.explanation-big-question {
-  margin: 30px 0;
-  padding: 22px 24px;
-  border-left: 4px solid var(--accent);
-  background: #f5f7f9;
-  color: #25333e;
-  font-size: 1.08rem;
-}
-
 .explanation-requirements {
   margin: 24px 0 30px;
   padding: 0;
@@ -562,9 +598,9 @@ a {
 .explanation-final-answer {
   margin: 34px 0 26px;
   padding: 26px;
-  border: 2px solid var(--accent);
-  border-radius: 6px;
-  background: #fff;
+  border: 0;
+  border-radius: 4px;
+  background: #eaf3f9;
   text-align: center;
 }
 
@@ -576,6 +612,7 @@ a {
 }
 
 .explanation-final-answer strong {
+  color: #163f60;
   font-size: clamp(1.15rem, 3.5vw, 1.5rem);
   line-height: 1.7;
 }
@@ -674,12 +711,12 @@ a {
   }
 
   .explanation-section-heading,
-  .explanation-chapter summary {
+  .explanation-chapter > summary {
     padding-right: 20px;
     padding-left: 20px;
   }
 
-  .explanation-chapter summary {
+  .explanation-chapter > summary {
     grid-template-columns: 30px 1fr 24px;
     min-height: 68px;
   }
@@ -707,7 +744,6 @@ a {
     align-items: flex-start;
   }
 
-  .explanation-big-question br,
   .explanation-final-answer br {
     display: none;
   }
