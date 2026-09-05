@@ -325,53 +325,63 @@ a {
 .explanation-callout,
 .explanation-pending {
   margin: 24px 0;
-  padding: 20px 22px;
+  padding: 0;
   border: 0;
-  border-radius: 4px;
-  background: var(--accent-light);
+  border-radius: 0;
+  background: transparent;
 }
 
 .explanation-answer {
-  display: flex;
-  gap: 18px;
-  align-items: baseline;
-  justify-content: space-between;
+  display: block;
 }
 
 .explanation-answer span,
 .explanation-condition > span,
 .explanation-callout > span,
 .explanation-pending > span {
+  display: table;
+  padding: 0.22em 0.55em;
+  border-radius: 3px;
+  background: #dcebf5;
   color: #49667d;
   font-size: 0.82rem;
   font-weight: 700;
 }
 
 .explanation-answer strong {
+  display: table;
+  margin-top: 7px;
+  padding: 0.18em 0.42em;
+  border-radius: 3px;
+  background: #dcebf5;
   color: #163f60;
   font-size: 1.5rem;
   line-height: 1.35;
-  text-align: right;
+  text-align: left;
 }
 
 .explanation-answer-compact {
   margin: 14px 0 0;
 }
 
-.explanation-callout,
-.explanation-pending {
-  background: #faf8ed;
-}
-
 .explanation-callout > span,
 .explanation-pending > span {
+  background: #f3efd9;
   color: #756928;
 }
 
 .explanation-callout p,
 .explanation-pending p,
 .explanation-condition p {
-  margin: 6px 0 0;
+  margin: 10px 0 0;
+}
+
+.explanation-condition p {
+  display: table;
+  padding: 0.35em 0.55em;
+  border-radius: 3px;
+  background: #e9f2f8;
+  color: #163f60;
 }
 
 .explanation-turn {
@@ -597,24 +607,33 @@ a {
 
 .explanation-final-answer {
   margin: 34px 0 26px;
-  padding: 26px;
+  padding: 0;
   border: 0;
-  border-radius: 4px;
-  background: #eaf3f9;
-  text-align: center;
+  border-radius: 0;
+  background: transparent;
+  text-align: left;
 }
 
 .explanation-final-answer p {
-  margin: 0 0 8px;
+  display: table;
+  margin: 0 0 10px;
+  padding: 0.22em 0.55em;
+  border-radius: 3px;
+  background: #dcebf5;
   color: var(--accent);
   font-size: 0.85rem;
   font-weight: 700;
 }
 
 .explanation-final-answer strong {
+  padding: 0.16em 0.34em;
+  border-radius: 3px;
+  background: #eaf3f9;
+  box-decoration-break: clone;
   color: #163f60;
   font-size: clamp(1.15rem, 3.5vw, 1.5rem);
   line-height: 1.7;
+  -webkit-box-decoration-break: clone;
 }
 
 .explanation-footer {
@@ -723,16 +742,6 @@ a {
 
   .explanation-summary-copy strong {
     font-size: 1.2rem;
-  }
-
-  .explanation-answer {
-    display: block;
-  }
-
-  .explanation-answer strong {
-    display: block;
-    margin-top: 5px;
-    text-align: left;
   }
 
   .explanation-solution-step {
