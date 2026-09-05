@@ -17,26 +17,23 @@ export function createExplanationView() {
     container.className = 'explanation-container';
     container.innerHTML = `
     <header class="explanation-hero" id="explanation-top">
-      <p class="explanation-kicker">AFTER EXAMINATION FILE / 受験後閲覧資料</p>
-      <div class="explanation-hero-rule" aria-hidden="true"></div>
       <p class="explanation-event-name">11月祭謎解き試験</p>
-      <h1>全問題解説</h1>
-      <p class="explanation-hero-lead">あなたが挑んだ追試験を、最初から振り返ります。</p>
-      <span class="explanation-stamp" aria-hidden="true">解禁</span>
+      <h1>問題解説</h1>
+      <p class="explanation-hero-lead">ご参加ありがとうございました。試験開始から最後の行動までを、順番に解説します。</p>
     </header>
 
     <main class="explanation-main">
       <section class="explanation-notice" aria-labelledby="explanation-notice-title">
         <span class="explanation-notice-label">はじめに</span>
-        <h2 id="explanation-notice-title">試験、お疲れさまでした。</h2>
-        <p>ここから先には、すべての問題の答えと、最後に何をすれば合格できたのかが書かれています。</p>
-        <p>解けた問題も、解けなかった問題も、試験を最初から振り返るつもりでお読みください。</p>
+        <h2 id="explanation-notice-title">このページについて</h2>
+        <p>このページには、すべての問題の答えと、合格するために必要だった最後の行動が書かれています。</p>
+        <p>解けた問題も、解けなかった問題も、順番に振り返ってみてください。</p>
         <p class="explanation-notice-small">※最終問題の詳しい解法は、問題内容の確定後に追記します。</p>
       </section>
 
       <nav class="explanation-toc" aria-label="解説の目次">
         <div class="explanation-toc-heading">
-          <span>CONTENTS</span>
+          <span>目次</span>
           <button type="button" data-explanation-toggle-all>すべて開く</button>
         </div>
         <ol>
@@ -54,7 +51,7 @@ export function createExplanationView() {
       <section class="explanation-synopsis" id="synopsis">
         <div class="explanation-section-heading">
           <span class="explanation-section-number">00</span>
-          <div><p>STORY</p><h2>あらすじ</h2></div>
+          <div><h2>あらすじ</h2></div>
         </div>
         <div class="explanation-synopsis-body">
           <p>あなたは、<strong>「追試験」</strong>を受けに来た、ある学校の生徒である。</p>
@@ -67,7 +64,7 @@ export function createExplanationView() {
       <details class="explanation-chapter" id="exam-start" open>
         <summary>
           <span class="explanation-section-number">01</span>
-          <span class="explanation-summary-copy"><small>PROLOGUE</small><strong>試験開始</strong></span>
+          <span class="explanation-summary-copy"><strong>試験開始</strong></span>
           <span class="explanation-summary-action" aria-hidden="true"></span>
         </summary>
         <div class="explanation-chapter-body">
@@ -88,7 +85,7 @@ export function createExplanationView() {
       <details class="explanation-chapter explanation-chapter-blue" id="question-1">
         <summary>
           <span class="explanation-section-number">02</span>
-          <span class="explanation-summary-copy"><small>QUESTION 1</small><strong>問題1</strong></span>
+          <span class="explanation-summary-copy"><strong>問題1</strong></span>
           <span class="explanation-summary-action" aria-hidden="true"></span>
         </summary>
         <div class="explanation-chapter-body">
@@ -113,7 +110,7 @@ export function createExplanationView() {
       <details class="explanation-chapter explanation-chapter-green" id="question-2">
         <summary>
           <span class="explanation-section-number">03</span>
-          <span class="explanation-summary-copy"><small>QUESTION 2</small><strong>問題2</strong></span>
+          <span class="explanation-summary-copy"><strong>問題2</strong></span>
           <span class="explanation-summary-action" aria-hidden="true"></span>
         </summary>
         <div class="explanation-chapter-body">
@@ -139,7 +136,7 @@ export function createExplanationView() {
       <details class="explanation-chapter explanation-chapter-red" id="question-3">
         <summary>
           <span class="explanation-section-number">04</span>
-          <span class="explanation-summary-copy"><small>QUESTION 3</small><strong>問題3</strong></span>
+          <span class="explanation-summary-copy"><strong>問題3</strong></span>
           <span class="explanation-summary-action" aria-hidden="true"></span>
         </summary>
         <div class="explanation-chapter-body">
@@ -176,7 +173,7 @@ export function createExplanationView() {
       <details class="explanation-chapter explanation-chapter-dark" id="final-question">
         <summary>
           <span class="explanation-section-number">05</span>
-          <span class="explanation-summary-copy"><small>FINAL QUESTION</small><strong>最終問題</strong></span>
+          <span class="explanation-summary-copy"><strong>最終問題</strong></span>
           <span class="explanation-summary-action" aria-hidden="true"></span>
         </summary>
         <div class="explanation-chapter-body">
@@ -195,14 +192,14 @@ export function createExplanationView() {
       <details class="explanation-chapter explanation-chapter-error" id="unfairness">
         <summary>
           <span class="explanation-section-number">06</span>
-          <span class="explanation-summary-copy"><small>ERROR 00199</small><strong>先生からの理不尽</strong></span>
+          <span class="explanation-summary-copy"><strong>先生からの理不尽</strong></span>
           <span class="explanation-summary-action" aria-hidden="true"></span>
         </summary>
         <div class="explanation-chapter-body">
           <p>いざ送信フォームから「傑作」と送ろうとすると、画面にはエラーが表示された。</p>
           <div class="explanation-error-card" role="img" aria-label="エラーコード00199。管理者権限による変更・破壊が確認され、既定のフォームから解答を送信できない">
             <span>!</span>
-            <div><small>ERROR CODE</small><strong>00199</strong><p>管理者権限による変更・破壊が確認されました。<br>既定のフォームから解答を送信することはできません。</p></div>
+            <div><small>エラーコード</small><strong>00199</strong><p>管理者権限による変更・破壊が確認されました。<br>既定のフォームから解答を送信することはできません。</p></div>
           </div>
           <p>試験スタッフへ尋ねても、このエラーを復旧することはできない。</p>
           <p>どうやら試験担当の先生は、送信フォームの構造をわざと破壊し、<strong>「絶対に合格できない試験」</strong>を作り上げていたらしい。</p>
@@ -219,7 +216,7 @@ export function createExplanationView() {
       <details class="explanation-chapter explanation-chapter-gold" id="final-action">
         <summary>
           <span class="explanation-section-number">07</span>
-          <span class="explanation-summary-copy"><small>THE LAST ACTION</small><strong>最後の提出</strong></span>
+          <span class="explanation-summary-copy"><strong>最後の提出</strong></span>
           <span class="explanation-summary-action" aria-hidden="true"></span>
         </summary>
         <div class="explanation-chapter-body">
@@ -269,7 +266,7 @@ export function createExplanationView() {
           </section>
 
           <div class="explanation-final-answer">
-            <p>合格へ至る、最後の行動</p>
+            <p>正解となる行動</p>
             <strong>「けっさく」のピースを小物入れに入れ、<br>落とし物としてスタッフへ渡す。</strong>
           </div>
           <p>スタッフがその小物入れを鈴木 優希先生へ届けることで、試験用ソフトを使わずに最終問題の答えを提出できる。こうして、理不尽な追試験に合格することができた。</p>
@@ -283,8 +280,7 @@ export function createExplanationView() {
       </details>
 
       <footer class="explanation-footer">
-        <p class="explanation-footer-title">追試験は、これにて終了です。</p>
-        <p>ご参加いただき、ありがとうございました。</p>
+        <p class="explanation-footer-title">最後までご覧いただき、ありがとうございました。</p>
         <a href="#explanation-top">ページの先頭へ戻る</a>
         <p class="explanation-hashtag">#11月祭謎解き試験</p>
       </footer>
