@@ -83,7 +83,6 @@ a {
   margin: 36px auto 0;
 }
 
-.explanation-notice,
 .explanation-toc,
 .explanation-synopsis,
 .explanation-chapter {
@@ -92,37 +91,7 @@ a {
   border-radius: 8px;
 }
 
-.explanation-notice {
-  padding: 30px 34px;
-  border-left: 5px solid var(--accent);
-}
-
-.explanation-notice-label {
-  display: block;
-  margin-bottom: 5px;
-  color: var(--accent);
-  font-size: 0.85rem;
-  font-weight: 700;
-}
-
-.explanation-notice h2 {
-  margin: 0 0 14px;
-  font-size: 1.35rem;
-  line-height: 1.5;
-}
-
-.explanation-notice p {
-  margin: 6px 0;
-}
-
-.explanation-notice-small {
-  margin-top: 14px !important;
-  color: var(--muted);
-  font-size: 0.9rem;
-}
-
 .explanation-toc {
-  margin-top: 20px;
   padding: 24px 28px;
 }
 
@@ -689,7 +658,6 @@ a {
     margin-top: 20px;
   }
 
-  .explanation-notice,
   .explanation-toc,
   .explanation-synopsis-body,
   .explanation-chapter-body {

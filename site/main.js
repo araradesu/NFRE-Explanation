@@ -23,14 +23,6 @@ export function createExplanationView() {
     </header>
 
     <main class="explanation-main">
-      <section class="explanation-notice" aria-labelledby="explanation-notice-title">
-        <span class="explanation-notice-label">はじめに</span>
-        <h2 id="explanation-notice-title">このページについて</h2>
-        <p>このページには、すべての問題の答えと、合格するために必要だった最後の行動が書かれています。</p>
-        <p>解けた問題も、解けなかった問題も、順番に振り返ってみてください。</p>
-        <p class="explanation-notice-small">※最終問題の詳しい解法は、問題内容の確定後に追記します。</p>
-      </section>
-
       <nav class="explanation-toc" aria-label="解説の目次">
         <div class="explanation-toc-heading">
           <span>目次</span>
