@@ -12,6 +12,32 @@ function picture(name, alt, caption, extraClass = '') {
     </figure>
   `;
 }
+function flipCard(page, questionName, answerName, answer) {
+    return `
+    <article class="explanation-flip-item">
+      <h3>${page}ページ</h3>
+      <button
+        class="explanation-flip-card"
+        type="button"
+        data-explanation-flip
+        data-explanation-page="${page}"
+        data-explanation-answer="${answer}"
+        aria-pressed="false"
+        aria-label="${page}ページの異変の答えを表示"
+      >
+        <span class="explanation-flip-card-inner">
+          <span class="explanation-flip-face explanation-flip-front">
+            <img src="${asset(questionName)}" alt="${page}ページ。異変の答えを隠した状態" loading="lazy" decoding="async">
+          </span>
+          <span class="explanation-flip-face explanation-flip-back" aria-hidden="true">
+            <img src="${asset(answerName)}" alt="${page}ページ。異変の答えを色で示した状態" loading="lazy" decoding="async">
+          </span>
+        </span>
+      </button>
+      <p class="explanation-flip-status" data-explanation-flip-status aria-live="polite">画像をタップして答えを見る</p>
+    </article>
+  `;
+}
 export function createExplanationView() {
     const container = document.createElement('div');
     container.className = 'explanation-container';
@@ -131,7 +157,14 @@ export function createExplanationView() {
           <details class="explanation-trivia">
             <summary>ウラ話</summary>
             <div class="explanation-trivia-body">
-              <p>ノートには、文章の内容、文字、線、ページの順番など、複数種類の異変を仕込んでいた。異変集は写真の準備ができ次第、このページへ追加する。</p>
+              <p>ノートの3～6ページには、それぞれ異なる種類の異変が仕込まれていた。</p>
+              <p>まずは答えを隠した状態で探してみよう。画像をタップすると、異変の場所を色で示した答えに切り替わる。</p>
+              <div class="explanation-flip-grid">
+                ${flipCard('3', 'notebook-page-3.png', 'notebook-page-3-answer.png', '同じ内容が2回書かれている')}
+                ${flipCard('4', 'notebook-page-4.png', 'notebook-page-4-answer.png', '書いた人の身に「何か」が起きている')}
+                ${flipCard('5', 'notebook-page-5.png', 'notebook-page-5-answer.png', '途中から家庭科の内容になっている')}
+                ${flipCard('6', 'notebook-page-6.png', 'notebook-page-6-answer.png', '信じられないほど多くの誤字がある')}
+              </div>
             </div>
           </details>
         </div>
@@ -307,6 +340,23 @@ export function createExplanationView() {
             const target = container.querySelector(link.getAttribute('href') ?? '');
             if (target?.matches('.explanation-chapter'))
                 target.open = true;
+        });
+    });
+    container.querySelectorAll('[data-explanation-flip]').forEach(button => {
+        button.addEventListener('click', () => {
+            const isFlipped = button.classList.toggle('is-flipped');
+            const page = button.dataset.explanationPage ?? '';
+            const answer = button.dataset.explanationAnswer ?? '';
+            const item = button.closest('.explanation-flip-item');
+            const status = item?.querySelector('[data-explanation-flip-status]');
+            const front = button.querySelector('.explanation-flip-front');
+            const back = button.querySelector('.explanation-flip-back');
+            button.setAttribute('aria-pressed', String(isFlipped));
+            button.setAttribute('aria-label', isFlipped ? `${page}ページを問題の状態に戻す` : `${page}ページの異変の答えを表示`);
+            front?.setAttribute('aria-hidden', String(isFlipped));
+            back?.setAttribute('aria-hidden', String(!isFlipped));
+            if (status)
+                status.textContent = isFlipped ? `答え：${answer}` : '画像をタップして答えを見る';
         });
     });
     const lightbox = container.querySelector('[data-explanation-lightbox]');
