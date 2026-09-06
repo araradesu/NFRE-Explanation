@@ -90,11 +90,15 @@ export function createExplanationView() {
           <p>埋めた文字のうち、矢印の先だけを左から読むと、<strong>「きーぼーどのうら」</strong>となる。</p>
           <div class="explanation-answer"><span>導かれた指示</span><strong>キーボードの裏</strong></div>
           <p>実際にキーボードを裏返すと、新たな問題と、4枚の謎のピースが現れた。</p>
+          <div class="explanation-photo-pair">
+            ${picture('question-1-keyboard-problem.png', 'キーボードの裏に貼られていた追加問題', 'キーボードの裏にあった問題')}
+            ${picture('question-1-four-pieces.png', 'キーボードの裏にあった4枚のピース', 'キーボードの裏にあった4枚のピース')}
+          </div>
           <div class="explanation-callout">
             <span>さらにもう一問</span>
             <p>新たな問題を囲む枠は、先ほど解いた問題1の背景と同じ形になっていた。そこで、背景が一致する部分を置き換えて考える。</p>
           </div>
-          ${picture('question-1-pieces.png', '問題1の背景を4枚のピースへ置き換える解説', '4枚のピースを使った、問題1の続き', 'explanation-figure-inset')}
+          ${picture('question-1-pieces.png', '問題1の枠をキーボード裏の問題へ置き換えた状態', '問題1の枠を置き換えて生まれた問題', 'explanation-figure-inset')}
           <p>4枚のピースを使い、指示どおり<strong>「けっかはっぴょう」</strong>を作る。再び矢印の先を読むと、<strong>「さくせすがこたえ」</strong>となる。</p>
           <div class="explanation-answer"><span>問題2のパスワード</span><strong>サクセス</strong></div>
           <p>これで、問題2を開放することができた。</p>
@@ -108,15 +112,19 @@ export function createExplanationView() {
           <span class="explanation-summary-action" aria-hidden="true"></span>
         </summary>
         <div class="explanation-chapter-body">
-          ${picture('question-2.png', 'ノートの文章に異変があるかを調べる問題2', '問題2')}
+          ${picture('question-2.png', '異変の有無を調べながらページを進む問題2の説明', 'ノートの10ページ目')}
           <p>指定されたページの文章を読み、そこに<strong>「異変」があるかどうか</strong>を調べる、少し前に流行ったゲームのような謎である。</p>
           <p>異変の有無を正しく判断しながらページを進み、最後にたどり着いたページの指示に従う。</p>
-          ${picture('question-2-route.png', '問題2でノートを進むページ順の解説', '正しいページの進み方', 'explanation-figure-inset')}
           <p>正しい経路は、<strong>5ページ → 9ページ → 6ページ → 3ページ → 10ページ</strong>。終端にたどり着くと、机の上にあった「謎の箱」を開ける番号が分かる。</p>
           <div class="explanation-answer"><span>謎の箱の番号</span><strong>5963</strong></div>
           <p>箱を開けると、中から<strong>ブラックライト</strong>と、新たな問題が現れた。</p>
-          ${picture('question-2-blacklight.png', 'かっこの形がある場所を探す追加問題の解説', '箱を開けたあとの追加問題', 'explanation-figure-inset')}
+          ${picture('question-2-blacklight.png', '3つのかっこの形を探して照らす追加問題', '箱を開けたあとの追加問題', 'explanation-figure-inset')}
           <p>【　】のような形を会場内で探すと、<strong>「説明用紙」「謎の箱」「壁のチーム番号」</strong>の3か所に見つかる。</p>
+          <div class="explanation-photo-triplet">
+            ${picture('question-2-bracket-box.png', '謎の箱に描かれたかっこの形', '1つ目：謎の箱')}
+            ${picture('question-2-bracket-sheet.png', '説明用紙に描かれたかっこの形', '2つ目：説明用紙')}
+            ${picture('question-2-bracket-team.png', '壁のチーム番号を囲むかっこの形', '3つ目：壁のチーム番号')}
+          </div>
           <p>【　】の形が小さい順にブラックライトを照らすと、1文字ずつ漢字が浮かび上がった。</p>
           <div class="explanation-answer"><span>浮かび上がった言葉</span><strong>大成功</strong></div>
           <p>これで、問題3を開放することができた。</p>
@@ -138,7 +146,6 @@ export function createExplanationView() {
         <div class="explanation-chapter-body">
           ${picture('question-3.png', '検索の手掛かりがある場所を示す問題3', '問題3')}
           <p>まずは、<strong>「検索の手掛かりのありか」</strong>を示す3つの謎を解き明かす必要があった。</p>
-          ${picture('question-3-clues.png', '問題3の3つの謎を解くための解説', '3つの謎が示していた場所', 'explanation-figure-inset')}
           <div class="explanation-clue-grid">
             <article>
               <span>手掛かり 1</span>
@@ -193,10 +200,7 @@ export function createExplanationView() {
         </summary>
         <div class="explanation-chapter-body">
           <p>いざ送信フォームから「傑作」と送ろうとすると、画面にはエラーが表示された。</p>
-          <div class="explanation-error-card" role="img" aria-label="エラーコード00199。管理者権限による変更・破壊が確認され、既定のフォームから解答を送信できない">
-            <span>!</span>
-            <div><small>エラーコード</small><strong>00199</strong><p>管理者権限による変更・破壊が確認されました。<br>既定のフォームから解答を送信することはできません。</p></div>
-          </div>
+          ${picture('error-screen.png', '最終問題の送信時に表示されるエラーコード00199の画面', '実際に表示されたエラー画面', 'explanation-figure-inset')}
           <p>試験スタッフへ尋ねても、このエラーを復旧することはできない。</p>
           <p>どうやら試験担当の先生は、送信フォームの構造をわざと破壊し、<strong>「絶対に合格できない試験」</strong>を作り上げていたらしい。</p>
           <p>このまま、不合格通知を待つしかないのだろうか。</p>

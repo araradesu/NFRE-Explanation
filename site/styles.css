@@ -601,7 +601,15 @@ a {
   gap: 16px;
 }
 
-.explanation-photo-pair .explanation-figure {
+.explanation-photo-triplet {
+  display: grid;
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+  gap: 12px;
+  margin: 24px 0;
+}
+
+.explanation-photo-pair .explanation-figure,
+.explanation-photo-triplet .explanation-figure {
   margin: 10px 0 0;
 }
 
@@ -725,7 +733,8 @@ a {
   .explanation-clue-grid,
   .explanation-search-keys,
   .explanation-owner-list,
-  .explanation-photo-pair {
+  .explanation-photo-pair,
+  .explanation-photo-triplet {
     grid-template-columns: 1fr;
   }
 
