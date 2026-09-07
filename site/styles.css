@@ -193,6 +193,19 @@ a {
   margin-bottom: 0;
 }
 
+.explanation-synopsis-body p strong,
+.explanation-chapter-body p strong {
+  padding: 0 0.06em;
+  background: linear-gradient(
+    transparent 62%,
+    #fff0a8 62%,
+    #fff0a8 92%,
+    transparent 92%
+  );
+  -webkit-box-decoration-break: clone;
+  box-decoration-break: clone;
+}
+
 .explanation-chapter {
   margin-top: 18px;
   overflow: hidden;
