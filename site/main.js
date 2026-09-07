@@ -158,7 +158,7 @@ export function createExplanationView() {
             <summary>ウラ話</summary>
             <div class="explanation-trivia-body">
               <p>ノートの3～6ページには、それぞれ異なる種類の異変が仕込まれていた。</p>
-              <p>まずは答えを隠した状態で探してみよう。画像をタップすると、異変の場所を色で示した答えに切り替わる。</p>
+              <p>画像をタップすると、異変の場所を色で示した答えに切り替わる。</p>
               <div class="explanation-flip-grid">
                 ${flipCard('3', 'notebook-page-3.png', 'notebook-page-3-answer.png', '同じ内容が2回書かれている')}
                 ${flipCard('4', 'notebook-page-4.png', 'notebook-page-4-answer.png', '書いた人の身に「何か」が起きている')}
@@ -213,12 +213,24 @@ export function createExplanationView() {
           <span class="explanation-summary-action" aria-hidden="true"></span>
         </summary>
         <div class="explanation-chapter-body">
-          <div class="explanation-pending">
-            <span>解説準備中</span>
-            <p>最終問題は内容を差し替える可能性があるため、詳しい途中経過の解説は、問題の確定後に掲載します。</p>
+          ${picture('final-question.png', '四隅に異なる図形が描かれた最終問題', '最終問題')}
+          <p>最終問題には、四隅に異なる図形が描かれていた。この図形を作るために使えそうなものを探すと、次の2つが見つかる。</p>
+          <ul class="explanation-final-sources">
+            <li><strong>問題1で手に入れた、4枚のピースの裏面</strong></li>
+            <li><strong>ノートの最初のページ</strong></li>
+          </ul>
+          <div class="explanation-photo-pair">
+            ${picture('final-pieces-backs.png', '四隅に図形の一部が描かれた4枚のピースの裏面', '4枚のピースの裏面')}
+            ${picture('final-notebook-first-page.png', '図形と目標の文字が描かれたノートの最初のページ', 'ノートの最初のページ')}
           </div>
-          <p>最終的に、問題1で手に入れた4枚のピースを正しく組み合わせると、<strong>「上」</strong>という漢字が浮かび上がる。</p>
-          <p>実際に上を向いて天井を見ると、そこには<strong>「傑作」</strong>と書かれた紙が貼られていた。</p>
+          <p>4枚のピースをノートの最初のページと組み合わせ、四隅が最終問題と同じ形になるように配置すると、次の形が完成する。</p>
+          ${picture('final-assembled.png', '4枚のピースをノートの最初のページへ正しく配置した状態', '4枚のピースを正しく組み合わせた状態', 'explanation-figure-inset')}
+          <p>このとき、中央には<strong>【　】のような形</strong>も出来上がっている。</p>
+          <p>問題2では、この形にブラックライトを照らすと文字が浮かび上がった。そこで、完成した【　】にも同じようにブラックライトを照らす。</p>
+          <p>すると「上」と「け」が新たに現れ、もともと見えていた文字と合わせて、<strong>「上を向け」</strong>という4文字の指示が完成する。</p>
+          ${picture('final-uv.png', 'ブラックライトで上とけの文字が浮かび、上を向けという指示が完成した状態', 'ブラックライトを照らすと「上を向け」が完成する', 'explanation-figure-inset')}
+          <div class="explanation-answer"><span>完成した指示</span><strong>上を向け</strong></div>
+          <p>指示どおりに上を見ると、天井には<strong>「傑作」</strong>と書かれた紙が貼られていた。</p>
           <div class="explanation-answer"><span>最終問題の答え</span><strong>傑作</strong></div>
           <p>これで、最終問題の答えが分かった。</p>
           <p class="explanation-turn">しかし……。</p>

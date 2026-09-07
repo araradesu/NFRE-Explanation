@@ -390,6 +390,15 @@ a {
   text-align: left;
 }
 
+.explanation-final-sources {
+  margin: 18px 0 26px;
+  padding-left: 1.5em;
+}
+
+.explanation-final-sources li {
+  margin: 6px 0;
+}
+
 .explanation-trivia {
   margin: 24px 0;
   overflow: hidden;
