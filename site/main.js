@@ -159,13 +159,14 @@ export function createExplanationView() {
           <details class="explanation-trivia">
             <summary>ウラ話</summary>
             <div class="explanation-trivia-body">
-              <p>ノートの3～6ページには、それぞれ異なる種類の異変が仕込まれていた。</p>
+              <p>ノートの3～7ページには、それぞれ異なる種類の異変が仕込まれていた。</p>
               <p>画像をタップすると、異変の場所を色で示した答えに切り替わる。</p>
               <div class="explanation-flip-grid">
                 ${flipCard('3', 'notebook-page-3.png', 'notebook-page-3-answer.png', '同じ内容が2回書かれている')}
                 ${flipCard('4', 'notebook-page-4.png', 'notebook-page-4-answer.png', '書いた人の身に「何か」が起きている')}
                 ${flipCard('5', 'notebook-page-5.png', 'notebook-page-5-answer.png', '途中から家庭科の内容になっている')}
                 ${flipCard('6', 'notebook-page-6.png', 'notebook-page-6-answer.png', '信じられないほど多くの誤字がある')}
+                ${flipCard('7', 'notebook-page-7.png', 'notebook-page-7-answer.png', '途中で文章が途切れている')}
               </div>
             </div>
           </details>
