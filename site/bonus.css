@@ -305,25 +305,26 @@ button { font: inherit; }
 
 .bonus-notebook.has-visual-font .bonus-notebook-copy p {
   font-family: "Kosugi Maru", "Hiragino Maru Gothic ProN", "Yu Gothic", sans-serif;
+  font-weight: 600;
 }
 
 .bonus-notebook.has-visual-tilt .bonus-notebook-copy {
-  transform: rotate(2deg);
+  transform: rotate(3deg);
   transform-origin: center;
 }
 
 .bonus-notebook.has-visual-drift .bonus-notebook-copy {
-  animation: bonus-text-drift 14s ease-in-out infinite alternate;
+  animation: bonus-text-drift 8s ease-in-out infinite alternate;
 }
 
 .bonus-visual-character { display: inline-block; }
-.bonus-visual-character.is-small { font-size: 0.88em; }
-.bonus-visual-character.is-large { font-size: 1.12em; }
+.bonus-visual-character.is-small { font-size: 0.82em; }
+.bonus-visual-character.is-large { font-size: 1.18em; }
 .bonus-visual-character.is-reversed { transform: scaleX(-1); }
 
 @keyframes bonus-text-drift {
   from { transform: translate(0, 0); }
-  to { transform: translate(1.6px, -1px); }
+  to { transform: translate(4px, -2px); }
 }
 
 .bonus-notebook-page-mark {

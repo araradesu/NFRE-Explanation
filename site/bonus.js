@@ -262,14 +262,14 @@ function setupGame(container) {
             if (/[\p{L}\p{N}]/u.test(character)) candidates.push(`${paragraphIndex}:${characterIndex}`);
           });
         });
-        const changedCount = Math.max(6, Math.round(candidates.length * 0.09));
+        const changedCount = Math.max(8, Math.round(candidates.length * 0.12));
         for (let index = 0; index < changedCount && candidates.length > 0; index++) {
           const candidateIndex = Math.floor(Math.random() * candidates.length);
           const characterKey = candidates.splice(candidateIndex, 1)[0];
           sizeCharacters.set(characterKey, index % 2 === 0 ? ' is-small' : ' is-large');
         }
       }
-      let remainingReversedCharacters = page.visualAnomaly?.type === 'reversed' ? 1 + Math.floor(Math.random() * 2) : 0;
+      let remainingReversedCharacters = page.visualAnomaly?.type === 'reversed' ? 2 + Math.floor(Math.random() * 2) : 0;
       pageBody.replaceChildren(...page.body.map((paragraph, paragraphIndex) => {
         const element = document.createElement('p');
         if (page.visualAnomaly?.type === 'sizes') {
