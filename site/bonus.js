@@ -96,6 +96,8 @@ function createBonusView() {
             </div>
             <span class="bonus-notebook-page-mark" aria-hidden="true">NOTE</span>
           </article>
+          <span class="bonus-tear-remnant" aria-hidden="true"></span>
+          <span class="bonus-answer-feedback" data-bonus-feedback aria-hidden="true"></span>
         </div>
         <p class="bonus-game-status" data-bonus-status aria-live="polite">準備ができたら開始してください。</p>
         <div class="bonus-game-actions">
@@ -121,6 +123,7 @@ function setupGame(container) {
   const answerButtons = Array.from(game?.querySelectorAll('[data-bonus-answer]') ?? []);
   const notebookStage = game?.querySelector('[data-bonus-notebook-stage]');
   const notebook = game?.querySelector('[data-bonus-notebook]');
+  const answerFeedback = game?.querySelector('[data-bonus-feedback]');
   const pageNumber = game?.querySelector('[data-bonus-page-number]');
   const pageTitle = game?.querySelector('[data-bonus-page-title]');
   const pageBody = game?.querySelector('[data-bonus-page-body]');
@@ -291,8 +294,22 @@ function setupGame(container) {
 
   const wait = milliseconds => new Promise(resolve => window.setTimeout(resolve, milliseconds));
 
+  const clearAnswerFeedback = () => {
+    if (!answerFeedback) return;
+    answerFeedback.classList.remove('is-correct', 'is-wrong');
+    answerFeedback.textContent = '';
+  };
+
+  const showAnswerFeedback = isCorrect => {
+    if (!answerFeedback) return;
+    answerFeedback.textContent = isCorrect ? '○' : '×';
+    answerFeedback.classList.toggle('is-correct', isCorrect);
+    answerFeedback.classList.toggle('is-wrong', !isCorrect);
+  };
+
   const resetNotebookMotion = () => {
     notebook?.classList.remove('is-cover', 'is-turning-page', 'is-tearing-page');
+    notebookStage?.classList.remove('is-tearing-page');
   };
 
   const revealNextPage = () => {
@@ -301,12 +318,13 @@ function setupGame(container) {
     acceptingAnswer = false;
     setAnswersEnabled(false);
     resetNotebookMotion();
+    clearAnswerFeedback();
     const isFirstPage = displayPageNumber === 0;
     const sourcePage = drawPage(isFirstPage);
     const availableVisualAnomalies = window.matchMedia('(prefers-reduced-motion: reduce)').matches
       ? visualAnomalies.filter(anomaly => anomaly.type !== 'drift')
       : visualAnomalies;
-    const visualAnomaly = !isFirstPage && !sourcePage.anomaly && Math.random() < 0.1
+    const visualAnomaly = !isFirstPage && !sourcePage.anomaly && Math.random() < 0.2
       ? availableVisualAnomalies[Math.floor(Math.random() * availableVisualAnomalies.length)]
       : null;
     currentPage = visualAnomaly
@@ -334,13 +352,16 @@ function setupGame(container) {
     stopTimer();
     setAnswersEnabled(false);
     const reduceMotion = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+    const isCorrect = answer === currentPage.anomaly;
+    showAnswerFeedback(isCorrect);
     notebook?.classList.remove('is-ready');
     notebook?.classList.add(answer ? 'is-tearing-page' : 'is-turning-page');
+    notebookStage?.classList.toggle('is-tearing-page', answer);
     notebook?.setAttribute('aria-busy', 'true');
-    if (status) status.textContent = answer ? 'ページを下へ破り捨てています。' : 'ページを横へめくっています。';
-    await wait(reduceMotion ? 80 : answer ? 720 : 600);
+    if (status) status.textContent = isCorrect ? '正解です。' : '判定が違います。';
+    await wait(reduceMotion ? 350 : answer ? 900 : 600);
     if (!isRunning) return;
-    if (answer !== currentPage.anomaly) {
+    if (!isCorrect) {
       resetNotebookMotion();
       finishGame('mistake');
       return;
