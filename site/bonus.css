@@ -155,7 +155,7 @@ button { font: inherit; }
 
 .bonus-notebook-stage.is-tearing-page .bonus-tear-remnant {
   opacity: 1;
-  transition: opacity 80ms linear 360ms;
+  animation: bonus-tear-remnant-fall 760ms cubic-bezier(.42, .08, .58, 1) both;
 }
 
 .bonus-answer-feedback {
@@ -336,19 +336,6 @@ button { font: inherit; }
   letter-spacing: 0.14em;
 }
 
-.bonus-notebook::after {
-  position: absolute;
-  top: -24px;
-  left: 18px;
-  width: 34px;
-  height: 26px;
-  opacity: 0;
-  background:
-    linear-gradient(135deg, transparent 0 38%, rgb(150 156 160 / 65%) 40% 46%, #fff 48% 67%, transparent 69%);
-  content: "";
-  pointer-events: none;
-}
-
 .bonus-notebook.is-ready { cursor: grab; touch-action: none; }
 
 .bonus-notebook.is-turning-page {
@@ -357,14 +344,10 @@ button { font: inherit; }
 }
 
 .bonus-notebook.is-tearing-page {
-  animation: bonus-tear-page 900ms cubic-bezier(.45, .05, .55, .95) both;
+  animation: bonus-tear-page 760ms cubic-bezier(.42, .08, .58, 1) both;
   clip-path: polygon(0 0, 100% 0, 100% 100%, 0 100%);
   transform-origin: top left;
   pointer-events: none;
-}
-
-.bonus-notebook.is-tearing-page::after {
-  animation: bonus-tear-line 560ms linear both;
 }
 
 @keyframes bonus-turn-page {
@@ -373,16 +356,15 @@ button { font: inherit; }
   100% { transform: translateX(-36%) rotateY(-105deg); opacity: 0; }
 }
 
-@keyframes bonus-tear-line {
-  0% { top: -24px; opacity: 0; }
-  8%, 88% { opacity: 1; }
-  100% { top: calc(100% - 8px); opacity: 0; }
+@keyframes bonus-tear-page {
+  0% { transform: translate(0, 0) rotate(0); clip-path: polygon(0 0, 100% 0, 100% 100%, 0 100%); opacity: 1; }
+  7% { transform: translate(1.5%, 0) rotate(0.35deg); clip-path: polygon(4% 0, 100% 0, 100% 100%, 4% 100%, 2% 96%, 4.8% 92%, 2.4% 88%, 4.6% 84%, 2.1% 80%, 4.9% 76%, 2.3% 72%, 4.7% 68%, 2% 64%, 4.8% 60%, 2.4% 56%, 4.6% 52%, 2.1% 48%, 4.9% 44%, 2.3% 40%, 4.7% 36%, 2% 32%, 4.8% 28%, 2.4% 24%, 4.6% 20%, 2.1% 16%, 4.9% 12%, 2.3% 8%, 4.7% 4%); opacity: 1; }
+  100% { transform: translate(12%, 74%) rotate(3.5deg); clip-path: polygon(4% 0, 100% 0, 100% 100%, 4% 100%, 2% 96%, 4.8% 92%, 2.4% 88%, 4.6% 84%, 2.1% 80%, 4.9% 76%, 2.3% 72%, 4.7% 68%, 2% 64%, 4.8% 60%, 2.4% 56%, 4.6% 52%, 2.1% 48%, 4.9% 44%, 2.3% 40%, 4.7% 36%, 2% 32%, 4.8% 28%, 2.4% 24%, 4.6% 20%, 2.1% 16%, 4.9% 12%, 2.3% 8%, 4.7% 4%); opacity: 0; }
 }
 
-@keyframes bonus-tear-page {
-  0%, 58% { transform: translate(0, 0) rotate(0); opacity: 1; }
-  62% { clip-path: polygon(4% 0, 100% 0, 100% 100%, 4% 100%, 2% 96%, 4.8% 92%, 2.4% 88%, 4.6% 84%, 2.1% 80%, 4.9% 76%, 2.3% 72%, 4.7% 68%, 2% 64%, 4.8% 60%, 2.4% 56%, 4.6% 52%, 2.1% 48%, 4.9% 44%, 2.3% 40%, 4.7% 36%, 2% 32%, 4.8% 28%, 2.4% 24%, 4.6% 20%, 2.1% 16%, 4.9% 12%, 2.3% 8%, 4.7% 4%); }
-  100% { transform: translate(12%, 74%) rotate(3.5deg); clip-path: polygon(4% 0, 100% 0, 100% 100%, 4% 100%, 2% 96%, 4.8% 92%, 2.4% 88%, 4.6% 84%, 2.1% 80%, 4.9% 76%, 2.3% 72%, 4.7% 68%, 2% 64%, 4.8% 60%, 2.4% 56%, 4.6% 52%, 2.1% 48%, 4.9% 44%, 2.3% 40%, 4.7% 36%, 2% 32%, 4.8% 28%, 2.4% 24%, 4.6% 20%, 2.1% 16%, 4.9% 12%, 2.3% 8%, 4.7% 4%); opacity: 0; }
+@keyframes bonus-tear-remnant-fall {
+  0%, 7% { transform: translate(0, 0) rotate(0); opacity: 1; }
+  100% { transform: translate(-10%, 74%) rotate(-3deg); opacity: 0; }
 }
 
 .bonus-game-status {
@@ -507,7 +489,6 @@ button { font: inherit; }
 @media (prefers-reduced-motion: reduce) {
   .bonus-notebook.is-turning-page,
   .bonus-notebook.is-tearing-page { animation-duration: 80ms; }
-  .bonus-notebook.is-tearing-page::after { animation: none; }
-  .bonus-notebook-stage.is-tearing-page .bonus-tear-remnant { opacity: 1; transition: none; }
+  .bonus-notebook-stage.is-tearing-page .bonus-tear-remnant { animation-duration: 80ms; }
   .bonus-notebook.has-visual-drift .bonus-notebook-copy { animation: none; }
 }

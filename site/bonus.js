@@ -147,6 +147,10 @@ function setupGame(container) {
   let revealToken = 0;
   let displayPageNumber = 0;
   let pointerStart = null;
+  let visualChanceBag = [];
+  let visualAnomalyQueue = [];
+  let visualQueuePrimed = false;
+  let tearAudioContext = null;
 
   try {
     bestScore = Math.max(0, Number.parseInt(localStorage.getItem('nfre-bonus-notebook-best') ?? '0', 10) || 0);
@@ -161,6 +165,66 @@ function setupGame(container) {
 
   const setAnswersEnabled = enabled => {
     answerButtons.forEach(button => { button.disabled = !enabled; });
+  };
+
+  const shuffleItems = items => {
+    const shuffled = [...items];
+    for (let index = shuffled.length - 1; index > 0; index--) {
+      const swapIndex = Math.floor(Math.random() * (index + 1));
+      [shuffled[index], shuffled[swapIndex]] = [shuffled[swapIndex], shuffled[index]];
+    }
+    return shuffled;
+  };
+
+  const drawVisualChance = () => {
+    if (visualChanceBag.length === 0)
+      visualChanceBag = shuffleItems([true, false, false, false, false]);
+    return visualChanceBag.pop();
+  };
+
+  const drawVisualAnomaly = availableAnomalies => {
+    visualAnomalyQueue = visualAnomalyQueue.filter(anomaly =>
+      availableAnomalies.some(available => available.type === anomaly.type));
+    if (!visualQueuePrimed) {
+      const priority = shuffleItems(availableAnomalies.filter(anomaly => anomaly.type === 'tilt' || anomaly.type === 'drift'));
+      const remaining = shuffleItems(availableAnomalies.filter(anomaly => anomaly.type !== 'tilt' && anomaly.type !== 'drift'));
+      visualAnomalyQueue = [...priority, ...remaining];
+      visualQueuePrimed = true;
+    } else if (visualAnomalyQueue.length === 0) {
+      visualAnomalyQueue = shuffleItems(availableAnomalies);
+    }
+    return visualAnomalyQueue.shift() ?? null;
+  };
+
+  const playTearSound = () => {
+    const AudioContextClass = window.AudioContext || window.webkitAudioContext;
+    if (!AudioContextClass) return;
+    tearAudioContext ??= new AudioContextClass();
+    if (tearAudioContext.state === 'suspended') void tearAudioContext.resume();
+
+    const duration = 0.22;
+    const sampleCount = Math.floor(tearAudioContext.sampleRate * duration);
+    const buffer = tearAudioContext.createBuffer(1, sampleCount, tearAudioContext.sampleRate);
+    const samples = buffer.getChannelData(0);
+    for (let index = 0; index < sampleCount; index++) {
+      const progress = index / sampleCount;
+      const envelope = Math.pow(1 - progress, 1.35);
+      const crackle = index % 29 < 5 ? 1 : 0.45;
+      samples[index] = (Math.random() * 2 - 1) * envelope * crackle;
+    }
+
+    const source = tearAudioContext.createBufferSource();
+    const filter = tearAudioContext.createBiquadFilter();
+    const gain = tearAudioContext.createGain();
+    filter.type = 'bandpass';
+    filter.frequency.value = 1650;
+    filter.Q.value = 0.65;
+    gain.gain.setValueAtTime(0.0001, tearAudioContext.currentTime);
+    gain.gain.exponentialRampToValueAtTime(0.24, tearAudioContext.currentTime + 0.008);
+    gain.gain.exponentialRampToValueAtTime(0.0001, tearAudioContext.currentTime + duration);
+    source.buffer = buffer;
+    source.connect(filter).connect(gain).connect(tearAudioContext.destination);
+    source.start();
   };
 
   const shuffledPages = () => {
@@ -324,8 +388,8 @@ function setupGame(container) {
     const availableVisualAnomalies = window.matchMedia('(prefers-reduced-motion: reduce)').matches
       ? visualAnomalies.filter(anomaly => anomaly.type !== 'drift')
       : visualAnomalies;
-    const visualAnomaly = !isFirstPage && !sourcePage.anomaly && Math.random() < 0.2
-      ? availableVisualAnomalies[Math.floor(Math.random() * availableVisualAnomalies.length)]
+    const visualAnomaly = !isFirstPage && !sourcePage.anomaly && drawVisualChance()
+      ? drawVisualAnomaly(availableVisualAnomalies)
       : null;
     currentPage = visualAnomaly
       ? { ...sourcePage, anomaly: true, reason: visualAnomaly.reason, visualAnomaly }
@@ -354,12 +418,13 @@ function setupGame(container) {
     const reduceMotion = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
     const isCorrect = answer === currentPage.anomaly;
     showAnswerFeedback(isCorrect);
+    if (answer) playTearSound();
     notebook?.classList.remove('is-ready');
     notebook?.classList.add(answer ? 'is-tearing-page' : 'is-turning-page');
     notebookStage?.classList.toggle('is-tearing-page', answer);
     notebook?.setAttribute('aria-busy', 'true');
     if (status) status.textContent = isCorrect ? '正解です。' : '判定が違います。';
-    await wait(reduceMotion ? 350 : answer ? 900 : 600);
+    await wait(reduceMotion ? 350 : answer ? 760 : 600);
     if (!isRunning) return;
     if (!isCorrect) {
       resetNotebookMotion();
