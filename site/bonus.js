@@ -77,19 +77,20 @@ function createBonusView() {
           <div><span>残り</span><strong><b data-bonus-timer>15.0</b>秒</strong></div>
         </div>
         <div class="bonus-game-timer-track" aria-hidden="true"><span data-bonus-timer-bar></span></div>
-        <article class="bonus-notebook" data-bonus-notebook aria-live="off">
-          <div class="bonus-notebook-meta"><span>Page : <b data-bonus-page-number>—</b></span><span>Date :</span></div>
-          <h2 data-bonus-page-title>異変探し試験</h2>
-          <div class="bonus-notebook-copy" data-bonus-page-body>
-            <p>開始すると、50ページの中からランダムに問題が表示されます。</p>
-            <p>文章をよく読み、異変があるかどうかを見極めてください。</p>
-          </div>
-          <span class="bonus-notebook-page-mark" aria-hidden="true">NOTE</span>
-        </article>
+        <div class="bonus-notebook-stage" data-bonus-notebook-stage>
+          <article class="bonus-notebook is-cover" data-bonus-notebook aria-live="off">
+            <div class="bonus-notebook-meta"><span>Page : <b data-bonus-page-number>—</b></span><span>Date :</span></div>
+            <h2 data-bonus-page-title>ノート異変探し</h2>
+            <div class="bonus-notebook-copy" data-bonus-page-body>
+              <p>「挑戦を始める」を押すと、1ページ目が開きます。</p>
+            </div>
+            <span class="bonus-notebook-page-mark" aria-hidden="true">NOTE</span>
+          </article>
+        </div>
         <p class="bonus-game-status" data-bonus-status aria-live="polite">準備ができたら開始してください。</p>
         <div class="bonus-game-actions">
-          <button class="bonus-game-answer" type="button" data-bonus-answer="no" disabled>異変なし</button>
-          <button class="bonus-game-answer bonus-game-answer-yes" type="button" data-bonus-answer="yes" disabled>異変あり</button>
+          <button class="bonus-game-answer" type="button" data-bonus-answer="no" disabled><span>異変なし</span><small>横にめくる</small></button>
+          <button class="bonus-game-answer bonus-game-answer-yes" type="button" data-bonus-answer="yes" disabled><span>異変あり</span><small>下に破る</small></button>
         </div>
         <button class="bonus-game-start" type="button" data-bonus-start>挑戦を始める</button>
         <div class="bonus-game-result" data-bonus-result aria-live="polite" hidden>
@@ -108,6 +109,7 @@ function setupGame(container) {
   const game = container.querySelector('[data-bonus-game]');
   const startButton = game?.querySelector('[data-bonus-start]');
   const answerButtons = Array.from(game?.querySelectorAll('[data-bonus-answer]') ?? []);
+  const notebookStage = game?.querySelector('[data-bonus-notebook-stage]');
   const notebook = game?.querySelector('[data-bonus-notebook]');
   const pageNumber = game?.querySelector('[data-bonus-page-number]');
   const pageTitle = game?.querySelector('[data-bonus-page-title]');
@@ -130,6 +132,8 @@ function setupGame(container) {
   let acceptingAnswer = false;
   let timerFrame = 0;
   let revealToken = 0;
+  let displayPageNumber = 0;
+  let pointerStart = null;
 
   try {
     bestScore = Math.max(0, Number.parseInt(localStorage.getItem('nfre-bonus-notebook-best') ?? '0', 10) || 0);
@@ -162,8 +166,8 @@ function setupGame(container) {
     return deck.pop();
   };
 
-  const renderPage = page => {
-    if (pageNumber) pageNumber.textContent = String(page.page);
+  const renderPage = (page, number = displayPageNumber) => {
+    if (pageNumber) pageNumber.textContent = String(number);
     if (pageTitle) pageTitle.textContent = page.title;
     if (pageBody) {
       pageBody.replaceChildren(...page.body.map(paragraph => {
@@ -230,26 +234,26 @@ function setupGame(container) {
 
   const wait = milliseconds => new Promise(resolve => window.setTimeout(resolve, milliseconds));
 
-  const revealNextPage = async () => {
+  const resetNotebookMotion = () => {
+    notebook?.classList.remove('is-cover', 'is-turning-page', 'is-tearing-page', 'is-dragging');
+    notebook?.style.removeProperty('--drag-x');
+    notebook?.style.removeProperty('--drag-y');
+    notebook?.style.removeProperty('--drag-rotate');
+  };
+
+  const revealNextPage = () => {
     if (!isRunning) return;
-    const token = ++revealToken;
+    ++revealToken;
     acceptingAnswer = false;
     setAnswersEnabled(false);
-    if (status) status.textContent = 'ページをめくっています……';
-    notebook?.classList.add('is-flipping');
-    notebook?.setAttribute('aria-busy', 'true');
-    const reduceMotion = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
-    const flips = reduceMotion ? 1 : 7;
-    for (let i = 0; i < flips; i++) {
-      renderPage(notebookPages[Math.floor(Math.random() * notebookPages.length)]);
-      await wait(reduceMotion ? 0 : 65);
-      if (token !== revealToken || !isRunning) return;
-    }
+    resetNotebookMotion();
     currentPage = drawPage();
-    renderPage(currentPage);
-    notebook?.classList.remove('is-flipping');
+    displayPageNumber++;
+    renderPage(currentPage, displayPageNumber);
+    notebookStage?.style.setProperty('--page-depth', String(Math.min(displayPageNumber - 1, 6)));
     notebook?.setAttribute('aria-busy', 'false');
-    if (status) status.textContent = '異変があるか、15秒以内に判定してください。';
+    notebook?.classList.add('is-ready');
+    if (status) status.textContent = '横にめくると「異変なし」、下に破ると「異変あり」です。';
     if (timerText) timerText.textContent = roundSeconds.toFixed(1);
     if (timerBar) {
       timerBar.style.width = '100%';
@@ -260,19 +264,26 @@ function setupGame(container) {
     startTimer();
   };
 
-  const submitAnswer = answer => {
+  const submitAnswer = async answer => {
     if (!isRunning || !acceptingAnswer || !currentPage) return;
     acceptingAnswer = false;
     stopTimer();
     setAnswersEnabled(false);
+    const reduceMotion = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+    notebook?.classList.remove('is-ready', 'is-dragging');
+    notebook?.classList.add(answer ? 'is-tearing-page' : 'is-turning-page');
+    notebook?.setAttribute('aria-busy', 'true');
+    if (status) status.textContent = answer ? 'ページを下へ破り捨てています。' : 'ページを横へめくっています。';
+    await wait(reduceMotion ? 80 : answer ? 720 : 600);
+    if (!isRunning) return;
     if (answer !== currentPage.anomaly) {
+      resetNotebookMotion();
       finishGame('mistake');
       return;
     }
     score++;
     updateScore();
-    if (status) status.textContent = '正解。次のページへ進みます。';
-    window.setTimeout(() => { void revealNextPage(); }, 520);
+    revealNextPage();
   };
 
   const startGame = () => {
@@ -281,6 +292,7 @@ function setupGame(container) {
     deck = shuffledPages();
     currentPage = null;
     score = 0;
+    displayPageNumber = 0;
     isRunning = true;
     acceptingAnswer = false;
     updateScore();
@@ -289,11 +301,53 @@ function setupGame(container) {
       startButton.disabled = true;
       startButton.textContent = '挑戦中';
     }
-    void revealNextPage();
+    revealNextPage();
   };
 
   startButton?.addEventListener('click', startGame);
-  answerButtons.forEach(button => button.addEventListener('click', () => submitAnswer(button.dataset.bonusAnswer === 'yes')));
+  answerButtons.forEach(button => button.addEventListener('click', () => { void submitAnswer(button.dataset.bonusAnswer === 'yes'); }));
+
+  notebook?.addEventListener('pointerdown', event => {
+    if (!acceptingAnswer || event.button !== 0) return;
+    pointerStart = { x: event.clientX, y: event.clientY, id: event.pointerId };
+    notebook.setPointerCapture(event.pointerId);
+    notebook.classList.add('is-dragging');
+  });
+
+  notebook?.addEventListener('pointermove', event => {
+    if (!pointerStart || pointerStart.id !== event.pointerId || !acceptingAnswer) return;
+    const x = event.clientX - pointerStart.x;
+    const y = Math.max(0, event.clientY - pointerStart.y);
+    notebook.style.setProperty('--drag-x', `${x}px`);
+    notebook.style.setProperty('--drag-y', `${y}px`);
+    notebook.style.setProperty('--drag-rotate', `${Math.max(-4, Math.min(4, x / 30))}deg`);
+  });
+
+  const finishPointer = event => {
+    if (!pointerStart || pointerStart.id !== event.pointerId) return;
+    const x = event.clientX - pointerStart.x;
+    const y = event.clientY - pointerStart.y;
+    pointerStart = null;
+    notebook?.classList.remove('is-dragging');
+    if (acceptingAnswer && y > 72 && Math.abs(x) < 90) {
+      void submitAnswer(true);
+      return;
+    }
+    if (acceptingAnswer && Math.abs(x) > 64 && Math.abs(y) < 80) {
+      void submitAnswer(false);
+      return;
+    }
+    notebook?.style.removeProperty('--drag-x');
+    notebook?.style.removeProperty('--drag-y');
+    notebook?.style.removeProperty('--drag-rotate');
+  };
+
+  notebook?.addEventListener('pointerup', finishPointer);
+  notebook?.addEventListener('pointercancel', () => {
+    pointerStart = null;
+    resetNotebookMotion();
+    if (isRunning && currentPage) notebook?.classList.add('is-ready');
+  });
   updateScore();
   setAnswersEnabled(false);
 }
