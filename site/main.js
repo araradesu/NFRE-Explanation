@@ -38,6 +38,293 @@ function flipCard(page, questionName, answerName, answer) {
     </article>
   `;
 }
+
+const bonusNotebookPages = [
+    { page: 1, title: '物理', anomaly: false, body: ['止まっている物体は、外から力を加えない限り止まり続ける。動いている物体も、同じ速さと向きで動き続けようとする。', 'この性質を慣性といい、乗り物が急に止まったとき、体が前へ動こうとするのもその一例である。'], reason: '内容に異変はない。慣性について正しく説明されている。' },
+    { page: 2, title: '生物', anomaly: true, body: ['細胞は、生物の体をつくる基本的な単位である。多くの生物は、役割の異なる多数の細胞からできている。', '細胞は、生物の体をつくる基本的な単位である。多くの生物は、役割の異なる多数の細胞からできている。'], reason: '同じ文章が二度続けて書かれている。' },
+    { page: 3, title: '数学', anomaly: false, body: ['比例では、一方の値が2倍、3倍になると、もう一方の値も同じように2倍、3倍になる。', '式では y=ax と表し、aを比例定数という。'], reason: '内容に異変はない。比例について正しく説明されている。' },
+    { page: 4, title: '地理', anomaly: true, body: ['日本はユーラシア大陸の西側に位置する島国であり、太平洋には面していない。', '国土は北海道、本州、四国、九州と、多数の島々から構成されている。'], reason: '日本の位置が逆である。日本はユーラシア大陸の東側にあり、太平洋に面している。' },
+    { page: 5, title: '国語', anomaly: false, body: ['文章の要点をつかむときは、繰り返し使われている言葉や、段落の最初と最後の文に注目するとよい。', '筆者の主張と、その理由や具体例を分けて整理することも大切である。'], reason: '内容に異変はない。文章読解の方法として自然である。' },
+    { page: 6, title: '化学', anomaly: true, body: ['水は、水素と酸素からできている物質である。', '水を表す化学式は CO2 であり、常温では液体として存在する。'], reason: '水の化学式が間違っている。正しくはH2Oで、CO2は二酸化炭素である。' },
+    { page: 7, title: '歴史', anomaly: false, body: ['江戸幕府は徳川家康によって開かれ、江戸を中心に政治が行われた。', '大名を統制するため、参勤交代などの制度が整えられた。'], reason: '内容に異変はない。江戸幕府について正しく説明されている。' },
+    { page: 8, title: '英語', anomaly: true, body: ['英語では、過去の出来事を表すときに動詞を過去形にする。', 'goの過去形は goed、seeの過去形は saw である。'], reason: 'goの過去形が間違っている。正しくはwentである。' },
+    { page: 9, title: '音楽', anomaly: false, body: ['楽譜に書かれた速度記号は、曲をどのくらいの速さで演奏するかを示している。', '曲の途中で速度が変わる場合は、その位置に新しい指示が書かれる。'], reason: '内容に異変はない。速度記号について正しく説明されている。' },
+    { page: 10, title: '美術', anomaly: true, body: ['赤、橙、黄などは暖色と呼ばれ、あたたかい印象を与えやすい。', '一方、青と緑も暖色に分類され、炎や太陽を表すときによく使われる。'], reason: '青や緑は暖色ではなく、一般に寒色として扱われる。' },
+    { page: 11, title: '保健', anomaly: false, body: ['十分な睡眠は、体の疲れを回復させるだけでなく、記憶の整理にも関係している。', '毎日できるだけ同じ時刻に起きると、生活のリズムを整えやすい。'], reason: '内容に異変はない。睡眠について自然な説明である。' },
+    { page: 12, title: '情報', anomaly: true, body: ['コンピューターは、さまざまな情報を数値に置き換えて処理する。', '二進数では0、1、2の三つの数字を使って数を表す。'], reason: '二進数で使う数字は0と1の二つだけである。' },
+    { page: 13, title: '公民', anomaly: false, body: ['国の権力を立法、行政、司法に分け、それぞれの機関が互いを抑制する仕組みを三権分立という。', '権力が一つの機関に集中することを防ぐ目的がある。'], reason: '内容に異変はない。三権分立について正しく説明されている。' },
+    { page: 14, title: '家庭科', anomaly: true, body: ['調理の前には手を洗い、まな板や包丁を清潔にしておく。', '生肉を切ったまな板は、洗わずにそのままサラダ作りへ使うと効率がよい。'], reason: '生肉を扱った器具を洗わずに使い回している。衛生上危険である。' },
+    { page: 15, title: '体育', anomaly: false, body: ['運動の前に準備運動を行うと、筋肉や関節を動かしやすくなり、けがの予防につながる。', '運動後は急に止まらず、軽く体を動かしながら呼吸を整えるとよい。'], reason: '内容に異変はない。運動前後の注意として自然である。' },
+    { page: 16, title: '天文', anomaly: true, body: ['太陽は毎日、地球のまわりを一周している。', 'そのため地球上では、昼と夜が交互に訪れる。'], reason: '昼夜が生じる主な理由は地球の自転であり、太陽が地球を毎日一周しているわけではない。' },
+    { page: 17, title: '環境', anomaly: false, body: ['ごみを減らす考え方として、リデュース、リユース、リサイクルがある。', 'まず不要な物を増やさず、使える物は繰り返し使うことが大切である。'], reason: '内容に異変はない。3Rについて正しく説明されている。' },
+    { page: 18, title: '防災', anomaly: true, body: ['地震が起きたら、まず頭を守り、落下物や倒れそうな家具から離れる。', '高い階から避難するときは、停止する前に急いでエレベーターへ乗る。'], reason: '地震時の避難にエレベーターを使うのは危険である。原則として階段を使う。' },
+    { page: 19, title: '図書', anomaly: false, body: ['図書館の本は、内容の分野ごとに分類され、記号を使って並べられている。', '分類記号を確認すると、同じ分野の本をまとめて探しやすい。'], reason: '内容に異変はない。図書の分類について正しく説明されている。' },
+    { page: 20, title: '心理', anomaly: true, body: ['短期記憶は、一度覚えた情報を永久に保存する仕組みである。', 'そのため、短期記憶へ入った情報を忘れることはない。'], reason: '短期記憶は一時的な記憶であり、情報が永久に残るわけではない。' },
+    { page: 21, title: '物理', anomaly: true, body: ['物体Aが物体Bを押すと、物体Bも物体Aを同じ大きさの力で押し返す。', 'この二つの力は同じ一つの物体に働くため、必ず打ち消し合う。'], reason: '作用と反作用は別々の物体に働くため、同じ物体上で打ち消し合うわけではない。' },
+    { page: 22, title: '生物', anomaly: false, body: ['植物は、光のエネルギーを使って二酸化炭素と水から養分をつくる。', 'このとき酸素が生じる。このはたらきを光合成という。'], reason: '内容に異変はない。光合成について正しく説明されている。' },
+    { page: 23, title: '数学', anomaly: true, body: ['三角形の三つの内角をすべて足すと、どのような形の三角形でも200度になる。', '一つの角が分からないときは、200度から残りの二つの角を引けばよい。'], reason: '三角形の内角の和は200度ではなく180度である。' },
+    { page: 24, title: '地理', anomaly: false, body: ['地形図の等高線は、海面から同じ高さの地点を結んだ線である。', '等高線の間隔が狭い場所ほど、一般に斜面は急である。'], reason: '内容に異変はない。等高線について正しく説明されている。' },
+    { page: 25, title: '国語', anomaly: true, body: ['物語の構成を四つに分けて考える方法を、起承転結という。', '出来事は「起・転・承・結」の順で進む。'], reason: '起承転結の順番が「起・転・承・結」に入れ替わっている。' },
+    { page: 26, title: '化学', anomaly: false, body: ['酸性の水溶液とアルカリ性の水溶液を混ぜると、互いの性質を打ち消し合うことがある。', 'この反応を中和といい、塩と水ができる。'], reason: '内容に異変はない。中和について正しく説明されている。' },
+    { page: 27, title: '歴史', anomaly: true, body: ['江戸時代が終わった後、日本では戦国時代が始まった。', '各地の大名が争い、やがて鎌倉幕府が開かれた。'], reason: '時代の順番が大きく逆転している。戦国時代は江戸時代より前である。' },
+    { page: 28, title: '英語', anomaly: false, body: ['英語の名詞には、一つを表す単数形と、複数を表す複数形がある。', '多くの名詞では、語尾にsやesを付けて複数形をつくる。'], reason: '内容に異変はない。英語の複数形について正しく説明されている。' },
+    { page: 29, title: '音楽', anomaly: true, body: ['四分音符を1拍として数える曲では、二分音符は2拍分の長さになる。', '全音符は5拍分の長さになり、四分音符五つと同じである。'], reason: '全音符は通常4拍分であり、5拍分ではない。' },
+    { page: 30, title: '美術', anomaly: false, body: ['遠近法では、遠くにある物を小さく、近くにある物を大きく描くことで奥行きを表せる。', '平行な線を一つの消失点へ集める方法もある。'], reason: '内容に異変はない。遠近法について正しく説明されている。' },
+    { page: 31, title: '保健', anomaly: true, body: ['暑い日に大量の汗をかいたときは、脱水を防ぐことが大切である。', '体内の水分を保つため、その後はできるだけ飲み物を避ける。'], reason: '脱水を防ぐには適切な水分補給が必要であり、飲み物を避けるのは逆効果である。' },
+    { page: 32, title: '情報', anomaly: false, body: ['パスワードは、他人に推測されにくい長さと内容にする。', '同じパスワードを複数のサービスで使い回さず、必要に応じて多要素認証も利用する。'], reason: '内容に異変はない。情報管理の注意として適切である。' },
+    { page: 33, title: '公民', anomaly: true, body: ['国会は、法律に基づいて裁判を行う司法の中心機関である。', '衆議院と参議院の二つの議院から構成されている。'], reason: '国会は司法機関ではなく、法律を制定する立法機関である。' },
+    { page: 34, title: '家庭科', anomaly: false, body: ['手洗いでは、手のひらだけでなく、指の間、指先、手首まで丁寧に洗う。', '洗った後は、清潔なタオルなどで水分を拭き取る。'], reason: '内容に異変はない。手洗いの方法として適切である。' },
+    { page: 35, title: '体育', anomaly: true, body: ['長距離走では、自分に合った一定のペースを保つことが大切である。', '呼吸が苦しくなったら、息を止めたまま走り続けると酸素を節約できる。'], reason: '運動中に息を止め続けても酸素は節約できず、危険である。' },
+    { page: 36, title: '天文', anomaly: false, body: ['月は自ら強い光を出しているのではなく、太陽の光を反射して光って見える。', '太陽、地球、月の位置関係によって、地球から見える明るい部分の形が変わる。'], reason: '内容に異変はない。月の満ち欠けについて正しく説明されている。' },
+    { page: 37, title: '環境', anomaly: true, body: ['紙は一度使うと性質が完全に失われるため、回収しても再利用することはできない。', '古紙はすべて燃やして処分する必要がある。'], reason: '紙は古紙として回収し、種類や状態に応じて再生紙などへリサイクルできる。' },
+    { page: 38, title: '防災', anomaly: false, body: ['避難場所までの道は、災害が起きる前に家族や周囲の人と確認しておく。', '一つの道が通れなくなる場合に備え、複数の経路を考えておくとよい。'], reason: '内容に異変はない。避難準備として適切である。' },
+    { page: 39, title: '図書', anomaly: true, body: ['借りた本は、返却日を過ぎても連絡せず、自分の本棚へ移せば所有物になる。', '読み終わった本だけを、好きな時期に返却すればよい。'], reason: '借りた本が自分の所有物になることはない。期限までに返却する必要がある。' },
+    { page: 40, title: '心理', anomaly: false, body: ['覚えたことを思い出さないまま時間がたつと、記憶は少しずつ薄れやすい。', '間隔を空けながら繰り返し復習すると、記憶を保ちやすくなる。'], reason: '内容に異変はない。記憶と復習について自然な説明である。' },
+    { page: 41, title: '物理', anomaly: false, body: ['光は、同じ物質の中では直線状に進む性質がある。', '光が物体に当たってはね返ることを反射といい、鏡にもこの性質が使われている。'], reason: '内容に異変はない。光の進み方について正しく説明されている。' },
+    { page: 42, title: '生物', anomaly: true, body: ['植物も動物と同じように呼吸を行い、生命活動に必要なエネルギーを得ている。', 'ただし、植物が呼吸をするのは光の当たる昼間だけである。'], reason: '植物は昼夜を問わず呼吸している。昼間だけではない。' },
+    { page: 43, title: '数学', anomaly: false, body: ['分母が同じ分数どうしの足し算では、分母はそのままにして分子を足す。', '分母が異なる場合は、通分して分母をそろえてから計算する。'], reason: '内容に異変はない。分数の足し算について正しく説明されている。' },
+    { page: 44, title: '地理', anomaly: true, body: ['赤道は地球を北半球と南半球に分ける線で、日本列島の中央を通っている。', 'そのため日本は、北半球と南半球の両方にまたがる国である。'], reason: '赤道は日本を通っていない。日本は北半球に位置する。' },
+    { page: 45, title: '国語', anomaly: false, body: ['文の中で「何が」「どうする」に当たる部分を、それぞれ主語、述語という。', '主語が省略されている文では、前後の内容から誰や何について述べているかを考える。'], reason: '内容に異変はない。主語と述語について正しく説明されている。' },
+    { page: 46, title: '化学', anomaly: true, body: ['化学変化の前後では、物質をつくる原子の組み合わせが変化する。', '反応後には原子そのものが消えるため、全体の質量は必ず0になる。'], reason: '化学変化で原子が消えるわけではなく、閉じた系では反応前後の質量は保存される。' },
+    { page: 47, title: '歴史', anomaly: false, body: ['江戸幕府が終わった後、明治政府は政治や社会の仕組みを大きく変えていった。', '藩を廃止して府県を置く廃藩置県も、その改革の一つである。'], reason: '内容に異変はない。明治初期の改革について正しく説明されている。' },
+    { page: 48, title: '英語', anomaly: true, body: ['英語では、数えられる名詞が一つのとき、名詞の前にaやanを置くことがある。', 'bookは母音の音で始まるため、an bookと書く。'], reason: 'bookは子音の音で始まるため、正しくはa bookである。' },
+    { page: 49, title: '音楽', anomaly: false, body: ['強弱記号は、音をどの程度の強さで演奏するかを示す。', 'pは弱く、fは強くという意味で、曲の表情をつくる手掛かりになる。'], reason: '内容に異変はない。強弱記号について正しく説明されている。' },
+    { page: 50, title: '家庭科', anomaly: true, body: ['衣服の洗濯表示を確認すると、適した洗い方や乾かし方を判断できる。', '恒星の中心では核融合反応が起こり、大きなエネルギーが生み出されている。', '表示に合わない方法で洗うと、生地を傷めることがある。'], reason: '家庭科の説明の途中に、突然天文の内容が混ざっている。' }
+];
+
+const bonusRoundSeconds = 15;
+
+function setupBonusNotebookGame(container) {
+    const game = container.querySelector('[data-bonus-game]');
+    if (!game)
+        return;
+
+    const startButton = game.querySelector('[data-bonus-start]');
+    const answerButtons = Array.from(game.querySelectorAll('[data-bonus-answer]'));
+    const notebook = game.querySelector('[data-bonus-notebook]');
+    const pageNumber = game.querySelector('[data-bonus-page-number]');
+    const pageTitle = game.querySelector('[data-bonus-page-title]');
+    const pageBody = game.querySelector('[data-bonus-page-body]');
+    const scoreText = game.querySelector('[data-bonus-score]');
+    const bestText = game.querySelector('[data-bonus-best]');
+    const timerText = game.querySelector('[data-bonus-timer]');
+    const timerBar = game.querySelector('[data-bonus-timer-bar]');
+    const status = game.querySelector('[data-bonus-status]');
+    const result = game.querySelector('[data-bonus-result]');
+    const resultScore = game.querySelector('[data-bonus-result-score]');
+    const resultMessage = game.querySelector('[data-bonus-result-message]');
+    const resultAnswer = game.querySelector('[data-bonus-result-answer]');
+
+    let deck = [];
+    let currentPage = null;
+    let score = 0;
+    let bestScore = 0;
+    let isRunning = false;
+    let acceptingAnswer = false;
+    let timerFrame = 0;
+    let revealToken = 0;
+
+    try {
+        bestScore = Math.max(0, Number.parseInt(localStorage.getItem('nfre-bonus-notebook-best') ?? '0', 10) || 0);
+    }
+    catch {
+        bestScore = 0;
+    }
+
+    const updateScore = () => {
+        if (scoreText)
+            scoreText.textContent = `${score}ページ`;
+        if (bestText)
+            bestText.textContent = `${bestScore}ページ`;
+    };
+
+    const setAnswersEnabled = enabled => {
+        answerButtons.forEach(button => { button.disabled = !enabled; });
+    };
+
+    const shuffledPages = () => {
+        const pages = [...bonusNotebookPages];
+        for (let i = pages.length - 1; i > 0; i--) {
+            const j = Math.floor(Math.random() * (i + 1));
+            [pages[i], pages[j]] = [pages[j], pages[i]];
+        }
+        if (currentPage && pages.length > 1 && pages[pages.length - 1].page === currentPage.page)
+            [pages[0], pages[pages.length - 1]] = [pages[pages.length - 1], pages[0]];
+        return pages;
+    };
+
+    const drawPage = () => {
+        if (deck.length === 0)
+            deck = shuffledPages();
+        return deck.pop();
+    };
+
+    const renderPage = page => {
+        if (pageNumber)
+            pageNumber.textContent = String(page.page);
+        if (pageTitle)
+            pageTitle.textContent = page.title;
+        if (pageBody) {
+            pageBody.replaceChildren(...page.body.map(paragraph => {
+                const element = document.createElement('p');
+                element.textContent = paragraph;
+                return element;
+            }));
+        }
+    };
+
+    const stopTimer = () => {
+        if (timerFrame)
+            cancelAnimationFrame(timerFrame);
+        timerFrame = 0;
+    };
+
+    const saveBest = () => {
+        if (score <= bestScore)
+            return;
+        bestScore = score;
+        try {
+            localStorage.setItem('nfre-bonus-notebook-best', String(bestScore));
+        }
+        catch {
+            // 閲覧環境によって保存できない場合も、今回のスコア表示は続ける。
+        }
+    };
+
+    const finishGame = cause => {
+        if (!isRunning)
+            return;
+        isRunning = false;
+        acceptingAnswer = false;
+        revealToken++;
+        stopTimer();
+        setAnswersEnabled(false);
+        saveBest();
+        updateScore();
+        if (timerBar)
+            timerBar.style.width = '0%';
+        if (status)
+            status.textContent = cause === 'timeout' ? '時間切れです。' : '判定を間違えました。';
+        if (resultScore)
+            resultScore.textContent = `${score}ページ正解`;
+        if (resultMessage)
+            resultMessage.textContent = cause === 'timeout' ? '15秒以内に判定できませんでした。' : '異変の判定が違っていました。';
+        if (resultAnswer && currentPage)
+            resultAnswer.textContent = `このページは「異変${currentPage.anomaly ? 'あり' : 'なし'}」。${currentPage.reason}`;
+        if (result)
+            result.hidden = false;
+        if (startButton) {
+            startButton.disabled = false;
+            startButton.textContent = 'もう一度挑戦する';
+        }
+    };
+
+    const startTimer = () => {
+        const deadline = performance.now() + bonusRoundSeconds * 1000;
+        const tick = now => {
+            if (!isRunning || !acceptingAnswer)
+                return;
+            const remaining = Math.max(0, deadline - now);
+            const remainingSeconds = remaining / 1000;
+            if (timerText)
+                timerText.textContent = remainingSeconds.toFixed(1);
+            if (timerBar) {
+                timerBar.style.width = `${(remaining / (bonusRoundSeconds * 1000)) * 100}%`;
+                timerBar.classList.toggle('is-warning', remainingSeconds <= 5);
+            }
+            if (remaining <= 0) {
+                finishGame('timeout');
+                return;
+            }
+            timerFrame = requestAnimationFrame(tick);
+        };
+        stopTimer();
+        timerFrame = requestAnimationFrame(tick);
+    };
+
+    const wait = milliseconds => new Promise(resolve => window.setTimeout(resolve, milliseconds));
+
+    const revealNextPage = async () => {
+        if (!isRunning)
+            return;
+        const token = ++revealToken;
+        acceptingAnswer = false;
+        setAnswersEnabled(false);
+        if (status)
+            status.textContent = 'ページをめくっています……';
+        notebook?.classList.add('is-flipping');
+        notebook?.setAttribute('aria-busy', 'true');
+
+        const reduceMotion = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+        const flips = reduceMotion ? 1 : 7;
+        for (let i = 0; i < flips; i++) {
+            const preview = bonusNotebookPages[Math.floor(Math.random() * bonusNotebookPages.length)];
+            renderPage(preview);
+            await wait(reduceMotion ? 0 : 65);
+            if (token !== revealToken || !isRunning)
+                return;
+        }
+
+        currentPage = drawPage();
+        renderPage(currentPage);
+        notebook?.classList.remove('is-flipping');
+        notebook?.setAttribute('aria-busy', 'false');
+        if (status)
+            status.textContent = '異変があるか、15秒以内に判定してください。';
+        if (timerText)
+            timerText.textContent = bonusRoundSeconds.toFixed(1);
+        if (timerBar) {
+            timerBar.style.width = '100%';
+            timerBar.classList.remove('is-warning');
+        }
+        acceptingAnswer = true;
+        setAnswersEnabled(true);
+        startTimer();
+    };
+
+    const submitAnswer = answer => {
+        if (!isRunning || !acceptingAnswer || !currentPage)
+            return;
+        acceptingAnswer = false;
+        stopTimer();
+        setAnswersEnabled(false);
+        if (answer !== currentPage.anomaly) {
+            finishGame('mistake');
+            return;
+        }
+        score++;
+        updateScore();
+        if (status)
+            status.textContent = '正解。次のページへ進みます。';
+        window.setTimeout(() => { void revealNextPage(); }, 520);
+    };
+
+    const startGame = () => {
+        revealToken++;
+        stopTimer();
+        deck = shuffledPages();
+        currentPage = null;
+        score = 0;
+        isRunning = true;
+        acceptingAnswer = false;
+        updateScore();
+        if (result)
+            result.hidden = true;
+        if (startButton) {
+            startButton.disabled = true;
+            startButton.textContent = '挑戦中';
+        }
+        void revealNextPage();
+    };
+
+    startButton?.addEventListener('click', startGame);
+    answerButtons.forEach(button => {
+        button.addEventListener('click', () => submitAnswer(button.dataset.bonusAnswer === 'yes'));
+    });
+    updateScore();
+    setAnswersEnabled(false);
+}
+
 export function createExplanationView() {
     const container = document.createElement('div');
     container.className = 'explanation-container';
@@ -63,6 +350,7 @@ export function createExplanationView() {
           <li><a href="#final-question"><span>05</span>最終問題</a></li>
           <li><a href="#unfairness"><span>06</span>先生からの理不尽</a></li>
           <li><a href="#final-action"><span>07</span>最後の提出</a></li>
+          <li><a href="#bonus-game"><span>08</span>おまけ謎</a></li>
         </ol>
       </nav>
 
@@ -328,6 +616,62 @@ export function createExplanationView() {
         </div>
       </details>
 
+      <section class="bonus-game" id="bonus-game" aria-labelledby="bonus-game-title" data-bonus-game>
+        <div class="explanation-section-heading">
+          <span class="explanation-section-number">08</span>
+          <div>
+            <p class="bonus-game-kicker">おまけ謎</p>
+            <h2 id="bonus-game-title">ノート異変探し・スコアアタック</h2>
+          </div>
+        </div>
+        <div class="bonus-game-body">
+          <p>問題2の「異変があるかどうかを見極める試験」を、全50ページに拡張しました。ランダムに現れるページを読み、異変の有無を判断してください。</p>
+          <ul class="bonus-game-rules">
+            <li>1ページの制限時間は<strong>15秒</strong></li>
+            <li>時間切れ、または1回の誤答で<strong>即終了</strong></li>
+            <li>正解したページ数がスコアになります</li>
+          </ul>
+
+          <div class="bonus-game-panel">
+            <div class="bonus-game-scoreboard" aria-label="スコア">
+              <div><span>現在</span><strong data-bonus-score>0ページ</strong></div>
+              <div><span>最高</span><strong data-bonus-best>0ページ</strong></div>
+              <div class="bonus-game-clock"><span>残り</span><strong><b data-bonus-timer>15.0</b>秒</strong></div>
+            </div>
+            <div class="bonus-game-timer-track" aria-hidden="true">
+              <span data-bonus-timer-bar></span>
+            </div>
+
+            <article class="bonus-notebook" data-bonus-notebook aria-live="off">
+              <div class="bonus-notebook-meta">
+                <span>Page : <b data-bonus-page-number>—</b></span>
+                <span>Date :</span>
+              </div>
+              <h3 data-bonus-page-title>異変探し試験</h3>
+              <div class="bonus-notebook-copy" data-bonus-page-body>
+                <p>開始すると、50ページの中からランダムに問題が表示されます。</p>
+                <p>文章をよく読み、異変があるかどうかを見極めてください。</p>
+              </div>
+              <span class="bonus-notebook-page-mark" aria-hidden="true">NOTE</span>
+            </article>
+
+            <p class="bonus-game-status" data-bonus-status aria-live="polite">準備ができたら開始してください。</p>
+            <div class="bonus-game-actions">
+              <button class="bonus-game-answer bonus-game-answer-no" type="button" data-bonus-answer="no" disabled>異変なし</button>
+              <button class="bonus-game-answer bonus-game-answer-yes" type="button" data-bonus-answer="yes" disabled>異変あり</button>
+            </div>
+            <button class="bonus-game-start" type="button" data-bonus-start>挑戦を始める</button>
+
+            <div class="bonus-game-result" data-bonus-result aria-live="polite" hidden>
+              <span>今回の記録</span>
+              <strong data-bonus-result-score>0ページ正解</strong>
+              <p data-bonus-result-message></p>
+              <p class="bonus-game-result-answer" data-bonus-result-answer></p>
+            </div>
+          </div>
+        </div>
+      </section>
+
       <footer class="explanation-footer">
         <p class="explanation-footer-title">最後までご覧いただき、ありがとうございました。</p>
         <a href="#explanation-top">ページの先頭へ戻る</a>
@@ -389,6 +733,7 @@ export function createExplanationView() {
         if (event.target === lightbox)
             lightbox.close();
     });
+    setupBonusNotebookGame(container);
     return container;
 }
 const app = document.getElementById('app');
