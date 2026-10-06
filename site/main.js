@@ -89,18 +89,11 @@ export function createExplanationView() {
         </summary>
         <div class="explanation-chapter-body">
           <p>最初の問題である「問題1」を見るためには、まずパスワードを導き出さなければならなかった。</p>
-          <p>画面に表示されたヒントは、<strong>「ノートの11ページ」</strong>。</p>
-          ${picture('password-modal.png', '問題1を開くためのパスワード入力画面', '問題1を開くためのパスワード画面')}
-          <p>机の上のノートを11ページまで開くと、そこには細長く崩された文字と、見る方向を示す矢印があった。</p>
-          <p>矢印の方向に合わせ、ノートを斜めからのぞき込む。すると、細長かった文字がつながり、<strong>「スタート」</strong>と読めることが分かる。</p>
+          ${picture('start-anagram.png', 'トースタの4文字を並び替えて始まりにふさわしい言葉を作る問題', '問題1を開くための並び替え問題')}
+          <p><strong>「トースタ」</strong>の4文字を並び替え、始まりにふさわしい言葉を探す。</p>
+          <p>文字を並び替えると、<strong>「スタート」</strong>になる。</p>
           <div class="explanation-answer"><span>最初のパスワード</span><strong>スタート</strong></div>
           <p>これで、問題1を開放することができた。</p>
-          <details class="explanation-trivia">
-            <summary>ウラ話</summary>
-            <div class="explanation-trivia-body">
-              <p>このように、見る角度を変えることで正しい形が現れるデザイン技法を、<strong>「アナモルフォーシス」</strong>という。</p>
-            </div>
-          </details>
         </div>
       </details>
 
