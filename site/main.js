@@ -94,6 +94,18 @@ export function createExplanationView() {
           <p>文字を並び替えると、<strong>「スタート」</strong>になる。</p>
           <div class="explanation-answer"><span>最初のパスワード</span><strong>スタート</strong></div>
           <p>これで、問題1を開放することができた。</p>
+          <details class="explanation-trivia">
+            <summary>ウラ話</summary>
+            <div class="explanation-trivia-body">
+              <p>最初の問題には、かなり多くのボツ案があった。</p>
+              <p>初めてこのような謎解きゲームを遊ぶ方でも<strong>「やることが分かる」</strong>ことを重視し、本編へ入る前の<strong>「小手調べ」</strong>になる問題を模索した。その一部が、次の3案である。</p>
+              <div class="explanation-photo-pair">
+                ${picture('opening-draft-extra-character.png', 'トースターから余分な1文字を除いて並び替えるボツ案', 'ボツ案1：余分な1文字を除いて並び替える')}
+                ${picture('opening-draft-star.png', '星の絵とトの文字を組み合わせるボツ案', 'ボツ案2：「スター」と「ト」を組み合わせる')}
+              </div>
+              ${picture('opening-draft-anamorphosis.png', '斜めから見るとスタートと読めるアナモルフォーシスのボツ案', 'ボツ案3：見る角度を変えて読む', 'explanation-figure-portrait')}
+            </div>
+          </details>
         </div>
       </details>
 

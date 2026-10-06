@@ -296,6 +296,12 @@ a {
   margin-left: auto;
 }
 
+.explanation-figure-portrait {
+  width: min(180px, 100%);
+  margin-right: auto;
+  margin-left: auto;
+}
+
 .explanation-image-button {
   position: relative;
   display: block;
