@@ -287,7 +287,8 @@ a {
 }
 
 .explanation-figure {
-  margin: 28px 0;
+  width: min(820px, 100%);
+  margin: 28px auto;
 }
 
 .explanation-figure-inset {
