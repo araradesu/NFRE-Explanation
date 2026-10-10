@@ -235,12 +235,19 @@ export function createExplanationView() {
           ${picture('final-assembled.png', '4枚のピースをノートの最初のページへ正しく配置した状態', '4枚のピースを正しく組み合わせた状態', 'explanation-figure-inset')}
           <p>このとき、中央には<strong>【　】のような形</strong>も出来上がっている。</p>
           <p>問題2では、この形にブラックライトを照らすと文字が浮かび上がった。そこで、完成した【　】にも同じようにブラックライトを照らす。</p>
-          <p>すると「上」と「け」が新たに現れ、もともと見えていた文字と合わせて、<strong>「上を向け」</strong>という4文字の指示が完成する。</p>
+          <p>すると「上」と「け」が新たに表れ、もともと見えていた文字と合わせて、<strong>「上を向け」</strong>という4文字の指示が完成する。</p>
           ${picture('final-uv.png', 'ブラックライトで上とけの文字が浮かび、上を向けという指示が完成した状態', 'ブラックライトを照らすと「上を向け」が完成する', 'explanation-figure-inset')}
           <div class="explanation-answer"><span>完成した指示</span><strong>上を向け</strong></div>
           <p>指示どおりに上を見ると、天井には<strong>「傑作」</strong>と書かれた紙が貼られていた。</p>
           <div class="explanation-answer"><span>最終問題の答え</span><strong>傑作</strong></div>
           <p>これで、最終問題の答えが分かった。</p>
+          <details class="explanation-trivia">
+            <summary>ウラ話</summary>
+            <div class="explanation-trivia-body">
+              ${picture('final-uv-without-pieces.png', 'ピースを置かずにブラックライトを照らすと隠し文字が浮かび上がった状態', 'ピースを置かずにブラックライトを照らした状態', 'explanation-figure-inset')}
+              <p>ピースを置かない状態でブラックライトを照らすと、<strong>「今見えている紙の上の文字はかんけい無いです」</strong>という文字列が浮かび上がる。</p>
+            </div>
+          </details>
           <p class="explanation-turn">しかし……。</p>
         </div>
       </details>
