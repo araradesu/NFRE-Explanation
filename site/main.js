@@ -363,7 +363,7 @@ export function createExplanationView() {
           <h2 id="explanation-credits-title">クレジット</h2>
           <div class="explanation-production-credits">
             <p>製作・デザイン・システム：arara</p>
-            <p>製作・当日運営：山平 遡羅　川上 陸　古川 博樹</p>
+            <p>製作・当日運営：山平 遡羅　川上 陸　古川 博貴</p>
             <p>協力：京都コンピュータ学院 11月祭実行委員</p>
           </div>
           <div class="explanation-credits-grid">
