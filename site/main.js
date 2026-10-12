@@ -359,6 +359,28 @@ export function createExplanationView() {
       </section>
 
       <footer class="explanation-footer">
+        <section class="explanation-credits" aria-labelledby="explanation-credits-title">
+          <h2 id="explanation-credits-title">使用素材・クレジット</h2>
+          <div class="explanation-credits-grid">
+            <div>
+              <h3>音声</h3>
+              <p>VOICEVOX:琴詠ニア<br>VOICEVOX:ナースロボ＿タイプＴ</p>
+              <a href="https://voicevox.hiroshiba.jp/">VOICEVOX</a>
+            </div>
+            <div>
+              <h3>音楽</h3>
+              <p>「奇妙な案内人」／MATSU<br>「Surviving Cyber」／Make a field Music<br>「LAST GUARDIAN」／MAKOOTO<br>「真相探求」／ゆーぎり<br>「Neon-colored City」／Reo</p>
+              <a href="https://opentracks.com/">OpenTracks（旧DOVA-SYNDROME）</a>
+              <p>「シグナルトレーサー」／BGMer</p>
+              <a href="https://bgmer.net/">BGMer</a>
+            </div>
+            <div>
+              <h3>効果音</h3>
+              <p><a href="https://otologic.jp/">OtoLogic</a><br>ライセンス：<a href="https://creativecommons.org/licenses/by/4.0/">CC BY 4.0</a><br>一部素材を加工して使用しています。</p>
+              <p><a href="https://soundeffect-lab.info/">効果音ラボ</a></p>
+            </div>
+          </div>
+        </section>
         <p class="explanation-footer-title">最後までご覧いただき、ありがとうございました。</p>
         <a href="#explanation-top">ページの先頭へ戻る</a>
         <p class="explanation-hashtag">#11月祭謎解き試験</p>

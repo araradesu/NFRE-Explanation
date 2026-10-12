@@ -809,6 +809,40 @@ a {
   font-weight: 700;
 }
 
+.explanation-credits {
+  max-width: 960px;
+  margin: 0 auto 40px;
+  padding-bottom: 32px;
+  border-bottom: 1px solid #d9e0e5;
+  color: #46545f;
+  text-align: left;
+  line-height: 1.9;
+  font-size: 0.9rem;
+}
+
+.explanation-credits h2 {
+  margin: 0 0 20px;
+  text-align: center;
+  font-size: 1.1rem;
+}
+
+.explanation-credits-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(min(100%, 250px), 1fr));
+  gap: 24px;
+}
+
+.explanation-credits h3 {
+  margin: 0 0 8px;
+  font-size: 1rem;
+}
+
+.explanation-footer .explanation-credits a {
+  display: inline;
+  margin: 0;
+  overflow-wrap: anywhere;
+}
+
 .explanation-footer a {
   display: inline-block;
   margin-top: 16px;
