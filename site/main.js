@@ -369,7 +369,7 @@ export function createExplanationView() {
           <div class="explanation-credits-grid">
             <div>
               <h3>音声</h3>
-              <p>VOICEVOX:琴詠ニア<br>VOICEVOX:ナースロボ＿タイプＴ</p>
+              <p>VOICEVOX:琴詠ニア</p>
               <a href="https://voicevox.hiroshiba.jp/">VOICEVOX</a>
             </div>
             <div>
