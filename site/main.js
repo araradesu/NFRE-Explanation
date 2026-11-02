@@ -288,6 +288,7 @@ export function createExplanationView() {
           ${picture('error-screen.png', '最終問題の送信時に表示されるエラーコード00199の画面', '実際に表示されたエラー画面', 'explanation-figure-inset')}
           <p>試験スタッフへ尋ねても、このエラーを復旧することはできない。</p>
           <p>どうやら試験担当の先生は、送信フォームの構造をわざと破壊し、<strong>「絶対に合格できない試験」</strong>を作り上げていたらしい。</p>
+          ${picture('teacher-note.png', '試験用ソフトでエラーが表示された際に受験者へ提示するよう書かれた先生の書置き', '先生の書置き', 'explanation-figure-inset')}
           <p>このまま、不合格通知を待つしかないのだろうか。</p>
         </div>
       </details>
@@ -321,6 +322,7 @@ export function createExplanationView() {
               <h3>先生の名前を調べる</h3>
               <p>試験担当の先生は、最初の通話で<strong>「先週、メッセージで直接伝えた通り、追試験を実施する」</strong>と話していた。</p>
               <p>そこでメッセージ履歴から、「先週の日付」に送られた「追試験」の連絡を探す。検索すると1件のメッセージがヒットし、試験担当者の名前が<strong>「鈴木 優希」</strong>だと分かる。</p>
+              ${picture('teacher-message-history.png', '追試験の実施を伝える鈴木優希からのメッセージ履歴', '先週届いていた追試験の連絡', 'explanation-figure-inset')}
               <div class="explanation-answer explanation-answer-compact"><span>試験担当</span><strong>鈴木 優希</strong></div>
             </div>
           </section>
@@ -330,11 +332,7 @@ export function createExplanationView() {
             <div>
               <h3>鈴木 優希と書かれた物を探す</h3>
               <p>注意事項にもあるとおり、試験で使われている物の中には、先生の私物が混ざっていた。</p>
-              <div class="explanation-owner-list">
-                <div><span>ノート</span><strong>鈴木 理央</strong></div>
-                <div><span>謎の箱</span><strong>鈴木 千尋</strong></div>
-                <div class="is-correct"><span>小物入れ</span><strong>鈴木 優希</strong></div>
-              </div>
+              ${picture('teacher-name-item.png', '小物入れの裏に鈴木優希と書かれている', '鈴木 優希と書かれた小物入れ', 'explanation-figure-tall')}
               <p>小物入れの裏にだけ、試験担当者本人の名前が書かれていた。これを落とし物にすれば、鈴木 優希先生の元へ届く。</p>
             </div>
           </section>
