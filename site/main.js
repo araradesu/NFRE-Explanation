@@ -12,31 +12,51 @@ function picture(name, alt, caption, extraClass = '') {
     </figure>
   `;
 }
-function flipCard(page, questionName, answerName, answer) {
+function notebookViewer() {
+    const spreads = Array.from({ length: 6 }, (_, spreadIndex) => {
+        const leftIndex = spreadIndex * 2 + 1;
+        const rightIndex = leftIndex + 1;
+        const page = index => String(index).padStart(4, '0');
+        const notebookPage = index => asset(`notebook-page-${page(index)}.jpg`);
+        const answerPage = index => asset(`notebook-answer-${page(index)}.jpg`);
+        const pageButton = (index, side) => `
+          <button class="explanation-notebook-page explanation-notebook-page-${side}" type="button" data-explanation-image="${notebookPage(index)}" aria-label="試験ノート${index}枚目を拡大">
+            <img
+              src="${notebookPage(index)}"
+              data-notebook-question="${notebookPage(index)}"
+              data-notebook-answer="${answerPage(index)}"
+              data-notebook-page="${index}"
+              alt="試験ノート${index}枚目"
+              loading="lazy"
+              decoding="async"
+            >
+            <span class="explanation-zoom-hint" aria-hidden="true">画像を拡大</span>
+          </button>
+        `;
+        return `
+        <div class="explanation-notebook-spread${spreadIndex === 0 ? ' is-active' : ''}" data-notebook-spread aria-hidden="${spreadIndex !== 0}">
+          ${pageButton(leftIndex, 'left')}
+          ${pageButton(rightIndex, 'right')}
+        </div>
+      `;
+    }).join('');
+
     return `
-    <article class="explanation-flip-item">
-      <h3>${page}ページ</h3>
-      <button
-        class="explanation-flip-card"
-        type="button"
-        data-explanation-flip
-        data-explanation-page="${page}"
-        data-explanation-answer="${answer}"
-        aria-pressed="false"
-        aria-label="${page}ページの異変の答えを表示"
-      >
-        <span class="explanation-flip-card-inner">
-          <span class="explanation-flip-face explanation-flip-front">
-            <img src="${asset(questionName)}" alt="${page}ページ。異変の答えを隠した状態" loading="lazy" decoding="async">
-          </span>
-          <span class="explanation-flip-face explanation-flip-back" aria-hidden="true">
-            <img src="${asset(answerName)}" alt="${page}ページ。異変の答えを色で示した状態" loading="lazy" decoding="async">
-          </span>
-        </span>
-      </button>
-      <p class="explanation-flip-status" data-explanation-flip-status aria-live="polite">画像をタップして答えを見る</p>
-    </article>
-  `;
+      <div class="explanation-notebook-viewer" data-notebook-viewer>
+        <div class="explanation-notebook-toolbar">
+          <button type="button" data-notebook-previous aria-label="前の見開きへ">← 前へ</button>
+          <p data-notebook-position aria-live="polite">1 / 6</p>
+          <button type="button" data-notebook-next aria-label="次の見開きへ">次へ →</button>
+        </div>
+        <div class="explanation-notebook-stage" data-notebook-stage>
+          <div class="explanation-notebook-spine" aria-hidden="true"></div>
+          ${spreads}
+        </div>
+        <p class="explanation-notebook-help">左右のボタン、または横方向のスワイプでページをめくれます。画像を押すと拡大できます。</p>
+        <button class="explanation-notebook-answer-button" type="button" data-notebook-toggle-answers aria-pressed="false">異変の答えを見る</button>
+        <p class="explanation-notebook-answer-status" data-notebook-answer-status aria-live="polite"></p>
+      </div>
+    `;
 }
 
 export function createExplanationView() {
@@ -68,20 +88,21 @@ export function createExplanationView() {
         </ol>
       </nav>
 
-      <section class="explanation-synopsis" id="synopsis">
-        <div class="explanation-section-heading">
+      <details class="explanation-chapter explanation-synopsis" id="synopsis">
+        <summary>
           <span class="explanation-section-number">00</span>
-          <div><h2>あらすじ</h2></div>
-        </div>
+          <span class="explanation-summary-copy"><strong>あらすじ</strong></span>
+          <span class="explanation-summary-action" aria-hidden="true"></span>
+        </summary>
         <div class="explanation-synopsis-body">
           <p>あなたは、<strong>「追試験」</strong>を受けに来た、ある学校の生徒である。</p>
           <p>先週、「試験担当」と名乗る先生から、<strong>学校のメッセージ機能を通じて呼び出され</strong>、指定された会場の席に着いた。</p>
           <p>目の前にあるのは、<strong>学校の備品や、先生の私物と思われる物</strong>たち。試験スタッフですら試験内容を知らされておらず、確認不足のせいか、<strong>会場には他人の落とし物まで残されていた</strong>。</p>
           <p>何も分からぬまま、あなたは謎と理不尽だらけの追試験に挑むのであった。</p>
         </div>
-      </section>
+      </details>
 
-      <details class="explanation-chapter" id="exam-start" open>
+      <details class="explanation-chapter" id="exam-start">
         <summary>
           <span class="explanation-section-number">01</span>
           <span class="explanation-summary-copy"><strong>試験開始</strong></span>
@@ -164,15 +185,8 @@ export function createExplanationView() {
           <details class="explanation-trivia">
             <summary>ウラ話</summary>
             <div class="explanation-trivia-body">
-              <p>ノートの3～7ページには、それぞれ異なる種類の異変が仕込まれていた。</p>
-              <p>画像をタップすると、異変の場所を色で示した答えに切り替わる。</p>
-              <div class="explanation-flip-grid">
-                ${flipCard('3', 'notebook-page-3.png', 'notebook-page-3-answer.png', '同じ内容が何度も書かれている')}
-                ${flipCard('4', 'notebook-page-4.png', 'notebook-page-4-answer.png', '書いた人の身に「何か」が起きている')}
-                ${flipCard('5', 'notebook-page-5.png', 'notebook-page-5-answer.png', '途中から家庭科の内容になっている')}
-                ${flipCard('6', 'notebook-page-6.png', 'notebook-page-6-answer.png', '信じられないほど多くの誤字がある')}
-                ${flipCard('7', 'notebook-page-7.png', 'notebook-page-7-answer.png', '途中で文章が途切れている')}
-              </div>
+              <p>試験で使用したノートを、実際の見開きに近い形で最初から最後まで閲覧できる。</p>
+              ${notebookViewer()}
             </div>
           </details>
         </div>
@@ -343,20 +357,21 @@ export function createExplanationView() {
         </div>
       </details>
 
-      <section class="bonus-invitation" id="bonus-game" aria-labelledby="bonus-game-title">
-        <div class="explanation-section-heading">
+      <details class="explanation-chapter bonus-invitation" id="bonus-game">
+        <summary>
           <span class="explanation-section-number">08</span>
-          <div>
-            <p class="bonus-invitation-kicker">おまけ謎</p>
-            <h2 id="bonus-game-title">ノート異変探し・スコアアタック</h2>
-          </div>
-        </div>
+          <span class="explanation-summary-copy">
+            <span class="bonus-invitation-kicker">おまけ謎</span>
+            <strong id="bonus-game-title">ノート異変探し・スコアアタック</strong>
+          </span>
+          <span class="explanation-summary-action" aria-hidden="true"></span>
+        </summary>
         <div class="bonus-invitation-body">
           <p>問題2の「異変があるかどうかを見極める試験」を、全50ページに拡張しました。</p>
           <p>ランダムに現れるノートを読み、15秒以内に異変の有無を判断してください。時間切れ、または1回の誤答で終了です。</p>
           <a class="bonus-invitation-button" href="./bonus.html">おまけ謎を遊ぶ</a>
         </div>
-      </section>
+      </details>
 
       <footer class="explanation-footer">
         <section class="explanation-credits" aria-labelledby="explanation-credits-title">
@@ -411,22 +426,76 @@ export function createExplanationView() {
                 target.open = true;
         });
     });
-    container.querySelectorAll('[data-explanation-flip]').forEach(button => {
-        button.addEventListener('click', () => {
-            const isFlipped = button.classList.toggle('is-flipped');
-            const page = button.dataset.explanationPage ?? '';
-            const answer = button.dataset.explanationAnswer ?? '';
-            const item = button.closest('.explanation-flip-item');
-            const status = item?.querySelector('[data-explanation-flip-status]');
-            const front = button.querySelector('.explanation-flip-front');
-            const back = button.querySelector('.explanation-flip-back');
-            button.setAttribute('aria-pressed', String(isFlipped));
-            button.setAttribute('aria-label', isFlipped ? `${page}ページを問題の状態に戻す` : `${page}ページの異変の答えを表示`);
-            front?.setAttribute('aria-hidden', String(isFlipped));
-            back?.setAttribute('aria-hidden', String(!isFlipped));
-            if (status)
-                status.textContent = isFlipped ? `答え：${answer}` : '画像をタップして答えを見る';
+    container.querySelectorAll('[data-notebook-viewer]').forEach(viewer => {
+        const spreads = Array.from(viewer.querySelectorAll('[data-notebook-spread]'));
+        const previous = viewer.querySelector('[data-notebook-previous]');
+        const next = viewer.querySelector('[data-notebook-next]');
+        const position = viewer.querySelector('[data-notebook-position]');
+        const stage = viewer.querySelector('[data-notebook-stage]');
+        const answerToggle = viewer.querySelector('[data-notebook-toggle-answers]');
+        const answerStatus = viewer.querySelector('[data-notebook-answer-status]');
+        let currentSpread = 0;
+        let pointerStartX = null;
+        let suppressNotebookClickUntil = 0;
+
+        const showSpread = index => {
+            currentSpread = Math.max(0, Math.min(index, spreads.length - 1));
+            spreads.forEach((spread, spreadIndex) => {
+                const isActive = spreadIndex === currentSpread;
+                spread.classList.toggle('is-active', isActive);
+                spread.setAttribute('aria-hidden', String(!isActive));
+            });
+            if (position)
+                position.textContent = `${currentSpread + 1} / ${spreads.length}`;
+            if (previous)
+                previous.disabled = currentSpread === 0;
+            if (next)
+                next.disabled = currentSpread === spreads.length - 1;
+        };
+
+        previous?.addEventListener('click', () => showSpread(currentSpread - 1));
+        next?.addEventListener('click', () => showSpread(currentSpread + 1));
+        stage?.addEventListener('pointerdown', event => {
+            pointerStartX = event.clientX;
         });
+        stage?.addEventListener('pointerup', event => {
+            if (pointerStartX === null)
+                return;
+            const distance = event.clientX - pointerStartX;
+            pointerStartX = null;
+            if (Math.abs(distance) < 50)
+                return;
+            suppressNotebookClickUntil = Date.now() + 400;
+            showSpread(currentSpread + (distance < 0 ? 1 : -1));
+        });
+        stage?.addEventListener('pointercancel', () => { pointerStartX = null; });
+        stage?.addEventListener('click', event => {
+            if (Date.now() >= suppressNotebookClickUntil)
+                return;
+            event.preventDefault();
+            event.stopImmediatePropagation();
+        }, true);
+
+        answerToggle?.addEventListener('click', () => {
+            const showAnswers = answerToggle.getAttribute('aria-pressed') !== 'true';
+            answerToggle.setAttribute('aria-pressed', String(showAnswers));
+            answerToggle.textContent = showAnswers ? '通常のノートに戻す' : '異変の答えを見る';
+            viewer.classList.toggle('is-showing-answers', showAnswers);
+            viewer.querySelectorAll('[data-notebook-question]').forEach(image => {
+                const source = showAnswers ? image.dataset.notebookAnswer : image.dataset.notebookQuestion;
+                const page = image.dataset.notebookPage ?? '';
+                if (!source)
+                    return;
+                image.src = source;
+                image.alt = showAnswers ? `試験ノート${page}枚目。異変の答えを示した状態` : `試験ノート${page}枚目`;
+                const button = image.closest('[data-explanation-image]');
+                if (button)
+                    button.dataset.explanationImage = source;
+            });
+            if (answerStatus)
+                answerStatus.textContent = showAnswers ? '全ページを異変の答え付き画像へ切り替えました。' : '全ページを通常の試験ノートへ戻しました。';
+        });
+        showSpread(0);
     });
     const lightbox = container.querySelector('[data-explanation-lightbox]');
     const lightboxImage = lightbox?.querySelector('img');
