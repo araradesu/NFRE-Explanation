@@ -568,6 +568,12 @@ a {
   box-shadow: inset 16px 0 18px -18px rgb(28 27 22 / 45%);
 }
 
+.explanation-notebook-page.is-empty {
+  background: transparent;
+  box-shadow: none;
+  cursor: default;
+}
+
 .explanation-notebook-page img {
   display: block;
   width: 100%;
@@ -626,6 +632,37 @@ a {
   color: #675d25;
   font-size: 0.82rem;
   text-align: center;
+}
+
+.explanation-clue-solutions {
+  display: grid;
+  gap: 24px;
+  margin: 26px 0;
+}
+
+.explanation-clue-solution {
+  padding: 24px;
+  border: 1px solid var(--border);
+  border-radius: 7px;
+  background: #f8f9fa;
+}
+
+.explanation-clue-solution .explanation-figure {
+  width: min(620px, 100%);
+  margin: 22px auto;
+}
+
+.explanation-clue-solution .explanation-figure:first-child {
+  margin-top: 0;
+}
+
+.explanation-clue-solution h3 {
+  margin: 20px 0 10px;
+  font-size: 1.2rem;
+}
+
+.explanation-clue-solution p {
+  margin: 0;
 }
 
 .explanation-clue-grid {
@@ -1050,6 +1087,10 @@ a {
 
   .explanation-notebook-spine {
     width: 16px;
+  }
+
+  .explanation-clue-solution {
+    padding: 16px;
   }
 
 }

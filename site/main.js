@@ -13,13 +13,22 @@ function picture(name, alt, caption, extraClass = '') {
   `;
 }
 function notebookViewer() {
-    const spreads = Array.from({ length: 6 }, (_, spreadIndex) => {
-        const leftIndex = spreadIndex * 2 + 1;
-        const rightIndex = leftIndex + 1;
+    const pagePairs = [
+        [null, 1],
+        [2, 3],
+        [4, 5],
+        [6, 7],
+        [8, 9],
+        [10, 11],
+        [12, null],
+    ];
+    const spreads = pagePairs.map(([leftIndex, rightIndex], spreadIndex) => {
         const page = index => String(index).padStart(4, '0');
         const notebookPage = index => asset(`notebook-page-${page(index)}.jpg`);
         const answerPage = index => asset(`notebook-answer-${page(index)}.jpg`);
-        const pageButton = (index, side) => `
+        const pageButton = (index, side) => index === null ? `
+          <span class="explanation-notebook-page explanation-notebook-page-${side} is-empty" aria-hidden="true"></span>
+        ` : `
           <button class="explanation-notebook-page explanation-notebook-page-${side}" type="button" data-explanation-image="${notebookPage(index)}" aria-label="試験ノート${index}枚目を拡大">
             <img
               src="${notebookPage(index)}"
@@ -45,7 +54,7 @@ function notebookViewer() {
       <div class="explanation-notebook-viewer" data-notebook-viewer>
         <div class="explanation-notebook-toolbar">
           <button type="button" data-notebook-previous aria-label="前の見開きへ">← 前へ</button>
-          <p data-notebook-position aria-live="polite">1 / 6</p>
+          <p data-notebook-position aria-live="polite">1 / 7</p>
           <button type="button" data-notebook-next aria-label="次の見開きへ">次へ →</button>
         </div>
         <div class="explanation-notebook-stage" data-notebook-stage>
@@ -201,21 +210,23 @@ export function createExplanationView() {
         <div class="explanation-chapter-body">
           ${picture('question-3.png', '検索の手掛かりがある場所を示す問題3', '問題3')}
           <p>まずは、<strong>「検索の手掛かりのありか」</strong>を示す3つの謎を解き明かす必要があった。</p>
-          <div class="explanation-clue-grid">
-            <article>
-              <span>手掛かり 1</span>
-              <h3>ブラックライト</h3>
-              <p>左の形は、問題2で手に入れたブラックライトのシルエット。思い切って分解すると、内部から<strong>「送信者：古川」</strong>が見つかった。</p>
+          <div class="explanation-clue-solutions">
+            <article class="explanation-clue-solution">
+              ${picture('question-3-left-clue.png', 'この形の物を探して開けろと書かれた左の手掛かり', '左の謎')}
+              <h3>左の手掛かり</h3>
+              <p>黒色の形は、問題2で手に入れたブラックライトのシルエットである。思い切って分解すると、中に情報が書かれていた。</p>
+              ${picture('question-3-blacklight-result.png', '分解したブラックライトの中に送信者は古川と書かれている', 'ブラックライトの中にあった情報', 'explanation-figure-inset')}
             </article>
-            <article>
-              <span>手掛かり 2</span>
-              <h3>モニター</h3>
-              <p>中央の図柄は、あるカタカナを4つにコピーし、90度ずつ回転させて重ねたもの。元の文字は<strong>「モニター」</strong>だった。モニターを上から押すと画面が下がり、奥から<strong>「送信日：2025/03/14」</strong>が現れた。</p>
+            <article class="explanation-clue-solution">
+              ${picture('question-3-center-clue.png', '図形を読み解き上から押すよう指示する真ん中の手掛かり', '真ん中の謎')}
+              <h3>真ん中の手掛かり</h3>
+              <p>この柄をよく見てみると、<strong>「モニター」</strong>というカタカナが4つ重なって隠れていることが分かる。モニターは上下の位置が調整できるようになっていたので、上から押してみると、奥に情報が現れた。</p>
             </article>
-            <article>
-              <span>手掛かり 3</span>
-              <h3>机の裏</h3>
-              <p>右の大きな文字は、漢字の<strong>「机」</strong>を裏側から見たもの。机の裏を探すと、<strong>「タイトル：追加資料」</strong>が見つかった。</p>
+            <article class="explanation-clue-solution">
+              ${picture('question-3-right-clue.png', '左右反転した机の文字を見るよう指示する右の手掛かり', '右の謎')}
+              <h3>右の手掛かり</h3>
+              <p>大きな文字は、漢字の<strong>「机」</strong>を左右反転し、裏側から見たものである。実際に机の裏を探すと、情報が見つかった。</p>
+              ${picture('question-3-desk-result.png', '机の裏にタイトルは追加資料と書かれた紙が貼られている', '机の裏にあった情報', 'explanation-figure-inset')}
             </article>
           </div>
           <div class="explanation-search-keys" aria-label="検索条件">
