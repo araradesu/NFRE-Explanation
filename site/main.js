@@ -74,8 +74,8 @@ export function createExplanationView() {
     container.innerHTML = `
     <header class="explanation-hero" id="explanation-top">
       <p class="explanation-event-name">11月祭謎解き試験</p>
-      <h1>問題解説</h1>
-      <p class="explanation-hero-lead">ご参加ありがとうございました。試験開始から最後の行動までを、順番に解説します。</p>
+      <h1>コンプリートサイト</h1>
+      <p class="explanation-hero-lead">ご参加ありがとうございました。この試験に関するいろんな情報を全て解説しています。</p>
     </header>
 
     <main class="explanation-main">
