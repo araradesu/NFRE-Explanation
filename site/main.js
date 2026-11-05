@@ -93,7 +93,8 @@ export function createExplanationView() {
           <li><a href="#final-question"><span>05</span>最終問題</a></li>
           <li><a href="#unfairness"><span>06</span>先生からの理不尽</a></li>
           <li><a href="#final-action"><span>07</span>最後の提出</a></li>
-          <li><a href="#bonus-game"><span>08</span>おまけ謎</a></li>
+          <li><a href="#ending"><span>08</span>エンディング</a></li>
+          <li><a href="#bonus-game"><span>09</span>おまけ謎</a></li>
         </ol>
       </nav>
 
@@ -366,9 +367,37 @@ export function createExplanationView() {
         </div>
       </details>
 
-      <details class="explanation-chapter bonus-invitation" id="bonus-game">
+      <details class="explanation-chapter explanation-chapter-ending" id="ending">
         <summary>
           <span class="explanation-section-number">08</span>
+          <span class="explanation-summary-copy"><strong>エンディング</strong></span>
+          <span class="explanation-summary-action" aria-hidden="true"></span>
+        </summary>
+        <div class="explanation-chapter-body">
+          <p>ゲーム内で再生される、2種類のエンディング映像を見ることができる。</p>
+          <div class="explanation-ending-grid">
+            <article class="explanation-ending-card">
+              <h3>成功エンディング</h3>
+              <video controls preload="none" playsinline aria-label="成功エンディング">
+                <source src="./videos/ending-success.mp4" type="video/mp4">
+                お使いのブラウザでは動画を再生できません。
+              </video>
+            </article>
+            <article class="explanation-ending-card">
+              <h3>失敗エンディング</h3>
+              <p>失敗後に流れる解説映像付き。</p>
+              <video controls preload="none" playsinline aria-label="失敗エンディング・解説映像付き">
+                <source src="./videos/ending-failure-explanation.mp4" type="video/mp4">
+                お使いのブラウザでは動画を再生できません。
+              </video>
+            </article>
+          </div>
+        </div>
+      </details>
+
+      <details class="explanation-chapter bonus-invitation" id="bonus-game">
+        <summary>
+          <span class="explanation-section-number">09</span>
           <span class="explanation-summary-copy">
             <span class="bonus-invitation-kicker">おまけ謎</span>
             <strong id="bonus-game-title">ノート異変探し・スコアアタック</strong>

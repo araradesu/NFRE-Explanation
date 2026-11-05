@@ -873,6 +873,38 @@ a {
   -webkit-box-decoration-break: clone;
 }
 
+.explanation-ending-grid {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: 20px;
+  margin-top: 24px;
+}
+
+.explanation-ending-card {
+  padding: 18px;
+  border: 1px solid var(--border);
+  border-radius: 7px;
+  background: #f8f9fa;
+}
+
+.explanation-ending-card h3 {
+  margin: 0 0 10px;
+  font-size: 1.15rem;
+}
+
+.explanation-ending-card p {
+  margin: -4px 0 12px;
+  color: var(--muted);
+  font-size: 0.86rem;
+}
+
+.explanation-ending-card video {
+  display: block;
+  width: 100%;
+  border-radius: 5px;
+  background: #000;
+}
+
 .bonus-invitation {
   margin-top: 18px;
   overflow: hidden;
@@ -1047,7 +1079,8 @@ a {
   .explanation-search-keys,
   .explanation-owner-list,
   .explanation-photo-pair,
-  .explanation-photo-triplet {
+  .explanation-photo-triplet,
+  .explanation-ending-grid {
     grid-template-columns: 1fr;
   }
 
